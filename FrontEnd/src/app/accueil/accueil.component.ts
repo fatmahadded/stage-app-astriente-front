@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AstreinteService} from '../astreinte.service';
 
 @Component({
   selector: 'app-accueil',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccueilComponent implements OnInit {
 
-  constructor() { }
+  public semaines: any ;
+  constructor(private astreinteService: AstreinteService) { }
 
   ngOnInit() {
+    this.astreinteService.getSemaines()
+        .subscribe(data => this.semaines = data);
+    // this.semaines = this.astreinteService.getSem();
+    for (let semaine of this.semaines) {
+      console.log('testtttt' + semaine.id);
+    }
   }
 
 }

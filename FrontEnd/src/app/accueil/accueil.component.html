@@ -12,12 +12,12 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <select class="form-control" id="sel1" name="sellist1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
+                                    <select class="form-control" id="sel1" name="sellist1" >
+                                        <option *ngFor="let semaine of semaines">
+                                            S{{semaine.number}} Du Vendredi {{semaine.dateDeb| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.dateFin| date: 'dd/MM/yyyy'}}</option>
+
                                     </select>
+
                                 </div>
                                 <div class="col-md-2">
                                     <button type="submit" class="btn btn-primary">Actualiser</button>
