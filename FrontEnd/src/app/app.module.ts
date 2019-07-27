@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
+// @ts-ignore
+import { RetourService } from './service/Retour.service';
+
 
 import {
   AgmCoreModule
@@ -38,11 +41,13 @@ import {AstreinteService} from './astreinte.service';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
 
 
   ],
-  providers: [AstreinteService],
+  providers: [RetourService,
+              AstreinteService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

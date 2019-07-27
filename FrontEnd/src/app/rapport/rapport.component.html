@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Soumettre</button>
+                <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="addRapport()">Soumettre</button>
             </div>
             <div class="col-md-4">
                 <div class="card card-profile">
@@ -115,15 +115,15 @@
                     <p class="card-category">Ajoutez vos retours</p>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form  [formGroup]="confirmFrom"(ngSubmit)="addRetour()">
                         <div class="row">
                             <div class="col-md-12">
                                 <label style="color: black">Entrée dans le dispositif (réunion d'entrée / sortie d'astreinte : contenu, durée, format, etc..)</label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce que vous avez apprécié"></textarea>
+                                    <textarea matInput placeholder="Ce que vous avez apprécié" formControlName="entreeAppreciated"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé"></textarea>
+                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé" formControlName="entreeToImprove"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -135,10 +135,10 @@
                                     <li>Documents (procédures, etc)</li>
                                 </ul></label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce que vous avez apprécié"></textarea>
+                                    <textarea matInput placeholder="Ce que vous avez apprécié" formControlName="moyensAppreciated"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé"></textarea>
+                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé" formControlName="moyensToImprove"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -147,13 +147,13 @@
                                 <label style="color: black">Interventions dans le cadre de l'astreinte et l'organisation de l'équipe:
                                     </label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Bonne pratique"></textarea>
+                                    <textarea matInput placeholder="Bonne pratique" formControlName="interventionBonnePratique"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Difficultés"></textarea>
+                                    <textarea matInput placeholder="Difficultés" formControlName="interventionDifficultes"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Commentaires libres"></textarea>
+                                    <textarea matInput placeholder="Commentaires libres" formControlName="interventionCommentaires"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
