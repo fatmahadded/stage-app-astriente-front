@@ -95,8 +95,8 @@
 
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="xls" >
+                                    <div class="custom-control custom-checkbox" *ngIf="astreintes">
+                                        <input type="checkbox" class="custom-control-input" id="xls" ngModel name="export" >
                                         <label class="custom-control-label" for="xls">Export XLS de la semaine</label>
                                     </div>
 

@@ -42,13 +42,20 @@ export class AccueilComponent implements OnInit {
                     'semaine': '/api/semaines/' + this.idSemaine,
                     'vivier': '/api/viviers/1'};
             this.accueilService.addAstreinte(addAstreinte).subscribe((val) => {
-                console.log('POST call successful value returned in body',
-                    val)});
-            this.accueilService.getAstreintes(this.idSemaine, this.idVivier)
-                .subscribe(data => this.astreintes = data);
+                console.log('POST call successful value returned in body', val);
+                this.accueilService.getAstreintes(this.idSemaine, this.idVivier)
+                    .subscribe(data => this.astreintes = data);
 
-            this.accueilService.getURL('/accueil/send/confirmation')
-                .subscribe();
+                this.accueilService.getURL('/accueil/send/confirmation')
+                    .subscribe(); });
+        }
+        if ( form.value.export === true ) {
+            const url = '/accueil/astreinteXls/' + this.astreintes[0].semaine.debutSemaine + '/' +
+                this.astreintes[0].semaine.finSemaine + '/1';
+            this.accueilService.export(url)
+                .subscribe( data => {
+                    this.exportJson = data;
+                    this.formatJsonToXls(this.exportJson)});
         }
     }
 

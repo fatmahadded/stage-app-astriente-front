@@ -7,6 +7,8 @@ import {Semaine} from '../Entity/semaine.entity';
 import {Astreinte} from '../Entity/astreinte.entity';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import 'rxjs/add/operator/finally';
+import {LoaderService} from './loader.service';
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -17,21 +19,39 @@ const API_URL = 'http://localhost:8000';
 })
 export class AccueilService {
 
-    constructor(private http: HttpClient) {
+    private loaderService;
+    constructor(private http: HttpClient, loaderService: LoaderService) {
+        this.loaderService = loaderService;
     }
 
     getSemaines(): Observable<Semaine[]> {
-        return this.http.get<Semaine[]>(API_URL + '/accueil/semaines');
+        this.showLoader();
+        return this.http.get<Semaine[]>(API_URL + '/accueil/semaines')
+            .finally(() => {
+                this.onEnd();
+            });
     }
 
     getAstreintes(idSemaine, idVivier ): Observable<Astreinte[]> {
-        return  this.http.get<Astreinte[]>(API_URL + '/accueil/astreinte/' + idSemaine + '/' + idVivier );
+        this.showLoader();
+        return  this.http.get<Astreinte[]>(API_URL + '/accueil/astreinte/' + idSemaine + '/' + idVivier )
+            .finally(() => {
+                this.onEnd();
+            });
     }
     getURL(url) {
-        return this.http.get(API_URL + url);
+        this.showLoader();
+        return this.http.get(API_URL + url)
+            .finally(() => {
+                this.onEnd();
+            });
     }
-    export(url){
-        return this.http.get(API_URL + url);
+    export(url) {
+        this.showLoader();
+        return this.http.get(API_URL + url)
+            .finally(() => {
+                this.onEnd();
+            });
     }
     public exportAsExcelFile( json: any[], excelFileName: string): void {
        if (json != null) {
@@ -50,8 +70,22 @@ export class AccueilService {
 
 
     addAstreinte(json) {
-        return this.http.post(API_URL + '/api/astreintes', json);
+        this.showLoader();
+        return this.http.post(API_URL + '/api/astreintes', json)
+            .finally(() => {
+                this.onEnd();
+            });
     }
 
-
+    private onEnd(): void {
+        this.hideLoader();
+    }
+    private showLoader(): void {
+        console.log('show loading');
+        this.loaderService.show();
+    }
+    private hideLoader(): void {
+        console.log('hide loading');
+        this.loaderService.hide();
+    }
 }
