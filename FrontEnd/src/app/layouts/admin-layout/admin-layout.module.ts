@@ -6,6 +6,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -18,6 +19,7 @@ import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {RatingModule} from 'ng-starrating';
+import {UserListComponent} from '../../user-list/user-list.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import {RatingModule} from 'ng-starrating';
     AccueilComponent,
     UserProfileComponent,
     NotificationsComponent,
+    UserListComponent,
   ]
 })
 
