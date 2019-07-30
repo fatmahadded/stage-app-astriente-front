@@ -16,6 +16,7 @@ import { RapportComponent } from './rapport/rapport.component';
 import { RatingModule } from 'ng-starrating';
 import {AstreinteService} from './astreinte.service';
 import {LoaderService} from '../Service/loader.service';
+import {LoaderComponent} from './loader/loader.component';
 
 
 @NgModule({
@@ -37,6 +38,8 @@ import {LoaderService} from '../Service/loader.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+
+    LoaderComponent,
 
 
   ],

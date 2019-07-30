@@ -19,13 +19,13 @@ import { MaterialModule } from '../material.module';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    LoaderComponent,
+   // LoaderComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    LoaderComponent,
+    // LoaderComponent,
   ]
 })
 export class ComponentsModule { }

@@ -1,4 +1,3 @@
-
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
@@ -26,7 +25,7 @@
                             <div class="row">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-danger" >Exporter</button>
+                                    <button type="submit" class="btn btn-danger">Exporter</button>
 
                                 </div>
                                 <div class="col-md-4"></div>
@@ -41,7 +40,7 @@
                 <div class="card card-profile">
                     <div class="card-avatar">
                         <a href="javascript:void(0)">
-                            <img class="img" src="./assets/img/user.png" />
+                            <img class="img" src="./assets/img/user.png"/>
                         </a>
                     </div>
                     <div class="card-body">
@@ -49,7 +48,6 @@
                         <h4 class="card-title">Foulen Ben Foulen</h4>
                         <h6 class="card-category text-gray">Email : Foulen@gmail.com</h6>
                         <h6 class="card-category text-gray">Vivier : Chef</h6>
-
 
 
                     </div>
@@ -69,10 +67,12 @@
                         <form (ngSubmit)="refreshTable(f)" #f="ngForm">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <select class="form-control" id="sel1" name="semaineChoisi" ngModel >
+                                    <select class="form-control" id="sel1" name="semaineChoisi" ngModel>
                                         <option hidden>--Selectionner une semaine--</option>
                                         <option *ngFor="let semaine of semaines" [ngValue]="semaine.id">
-                                            S{{semaine.numSemaine}} Du Vendredi {{semaine.debutSemaine| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.finSemaine| date: 'dd/MM/yyyy'}}</option>
+                                            S{{semaine.numSemaine}} Du
+                                            Vendredi {{semaine.debutSemaine| date: 'dd/MM/yyyy'}} au
+                                            Jeudi {{semaine.finSemaine| date: 'dd/MM/yyyy'}}</option>
 
                                     </select>
 
@@ -89,15 +89,19 @@
                             <div class="row">
 
                                 <div class="col-md-6">
-                                    <div class="custom-control custom-checkbox" *ngIf="idSemaine!=null && astreintes!=null"  >
-                                        <input type="checkbox" class="custom-control-input" id="ins" ngModel name="inscrire">
-                                        <label class="custom-control-label" for="ins">M'inscrire pour toute la semaine</label>
+                                    <div class="custom-control custom-checkbox"
+                                         *ngIf="idSemaine!=null && astreintes!=null">
+                                        <input type="checkbox" class="custom-control-input" id="ins" ngModel
+                                               name="inscrire">
+                                        <label class="custom-control-label" for="ins">M'inscrire pour toute la
+                                            semaine</label>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="custom-control custom-checkbox" *ngIf="astreintes">
-                                        <input type="checkbox" class="custom-control-input" id="xls" ngModel name="export" >
+                                        <input type="checkbox" class="custom-control-input" id="xls" ngModel
+                                               name="export">
                                         <label class="custom-control-label" for="xls">Export XLS de la semaine</label>
                                     </div>
 
@@ -151,20 +155,19 @@
 
                                     </thead>
                                     <tbody *ngIf="astreintes!=null">
-                                    <tr     *ngFor="let astreinte of astreintes" >
+                                    <tr *ngFor="let astreinte of astreintes">
                                         <td>{{astreinte.vivier.label}}</td>
                                         <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
-<!--                                            {{console.log('********'+number)}}-->
-                                            <div class="custom-control custom-checkbox" *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock" >
-<!--                                                <input type="hidden" id="custId" name="custId" value="{{existRemplacement(number,astreinte) }}">-->
+                                            <div class="custom-control custom-checkbox"
+                                                 *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock">
                                                 <input type="checkbox" class="custom-control-input"
-                                                       id="remplacement{{number}}" name="remplacement{{number}}"  ngModel>
-                                                <label class="custom-control-label"  for="remplacement{{number}}" >Remplacer</label>
-                                                {{astreinte.user.nom +' ' +astreinte.user.prenom }}
-<!--                                                <p *ngIf="!existRemplacement(number,astreinte); else elseBlock">{{astreinte.user.nom +' ' +astreinte.user.prenom }}</p>-->
-<!--                                                <ng-template #elseBlock>{{getRemplacementUser(number,astreinte) }}</ng-template>-->
+                                                       id="remplacement{{number}}" name="remplacement{{number}}"
+                                                       ngModel>
+                                                <label class="custom-control-label" for="remplacement{{number}}">Remplacer</label>
+                                                {{astreinte.user.nom + ' ' + astreinte.user.prenom }}
                                             </div>
-                                            <ng-template #elseBlock>{{getRemplacementUser(astreinte.remplacements,number)}}</ng-template>
+                                            <ng-template
+                                                #elseBlock>{{getRemplacementUser(astreinte.remplacements, number)}}</ng-template>
                                         </td>
 
                                     </tr>
