@@ -23,7 +23,13 @@ export class AccueilService {
     constructor(private http: HttpClient, loaderService: LoaderService) {
         this.loaderService = loaderService;
     }
-
+    addRemplacement(json) {
+        this.showLoader();
+        return this.http.post(API_URL + '/api/remplacements', json)
+            .finally(() => {
+                this.onEnd();
+            });
+    }
     getSemaines(): Observable<Semaine[]> {
         this.showLoader();
         return this.http.get<Semaine[]>(API_URL + '/accueil/semaines')
@@ -65,10 +71,6 @@ export class AccueilService {
         const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
         FileSaver.saveAs(data, fileName + '_export_' + new  Date().getTime() + EXCEL_EXTENSION);
     }
-
-
-
-
     addAstreinte(json) {
         this.showLoader();
         return this.http.post(API_URL + '/api/astreintes', json)
@@ -76,7 +78,6 @@ export class AccueilService {
                 this.onEnd();
             });
     }
-
     private onEnd(): void {
         this.hideLoader();
     }

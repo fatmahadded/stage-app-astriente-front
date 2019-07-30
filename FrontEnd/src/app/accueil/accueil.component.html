@@ -1,3 +1,4 @@
+
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
@@ -104,6 +105,7 @@
                             </div>
                             <div class="table-responsive row">
                                 <table class="table table-striped table-bordered" *ngIf="astreintes!=null">
+
                                     <thead class=" text-primary">
                                     <th rowspan="2" class="text-center">Vivier</th>
                                     <th colspan="2" class="text-center">
@@ -148,97 +150,22 @@
                                     <th class="text-center">Après-midi</th>
 
                                     </thead>
-                                    <tbody>
-                                    <tr   *ngFor="let astreinte of astreintes" >
+                                    <tbody *ngIf="astreintes!=null">
+                                    <tr     *ngFor="let astreinte of astreintes" >
                                         <td>{{astreinte.vivier.label}}</td>
-
-                                        <td>
-                                            <div class="custom-control custom-checkbox" >
-                                                <input type="checkbox" class="custom-control-input" id="vendrediM" >
-                                                <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                                {{astreinte.user.nom +' ' +astreinte.user.prenom}}
+                                        <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
+<!--                                            {{console.log('********'+number)}}-->
+                                            <div class="custom-control custom-checkbox" *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock" >
+<!--                                                <input type="hidden" id="custId" name="custId" value="{{existRemplacement(number,astreinte) }}">-->
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="remplacement{{number}}" name="remplacement{{number}}"  ngModel>
+                                                <label class="custom-control-label"  for="remplacement{{number}}" >Remplacer</label>
+                                                {{astreinte.user.nom +' ' +astreinte.user.prenom }}
+<!--                                                <p *ngIf="!existRemplacement(number,astreinte); else elseBlock">{{astreinte.user.nom +' ' +astreinte.user.prenom }}</p>-->
+<!--                                                <ng-template #elseBlock>{{getRemplacementUser(number,astreinte) }}</ng-template>-->
                                             </div>
+                                            <ng-template #elseBlock>{{getRemplacementUser(astreinte.remplacements,number)}}</ng-template>
                                         </td>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="vendrediA" >
-                                                <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                                {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                            </div>
-                                        </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="samediM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="samediA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="dimancheM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="dimancheA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="lundiM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="lundiA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="mardiM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="mardiA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="mercrediM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="mercrediA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="jeudiM" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="jeudiA" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            {{astreinte.user.nom +' ' +astreinte.user.prenom}}
-                                        </div>
-                                    </td>
-
 
                                     </tr>
                                     </tbody>

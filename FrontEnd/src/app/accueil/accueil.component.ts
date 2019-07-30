@@ -3,6 +3,7 @@ import {AccueilService} from '../../Service/accueil.service';
 import {NgForm} from '@angular/forms';
 import {Astreinte} from '../../Entity/astreinte.entity';
 import {XlsFormatEntity} from '../../Entity/xlsFormat.entity'
+import {Remplacement} from '../../Entity/remplacement.entity';
 
 @Component({
     selector: 'app-accueil',
@@ -17,6 +18,8 @@ export class AccueilComponent implements OnInit {
     public idSemaine: any ;
     private results: Object;
     private exportJson: any;
+    console = console;
+
 
 
     constructor(private accueilService: AccueilService) {
@@ -37,6 +40,32 @@ export class AccueilComponent implements OnInit {
         return this.results;
     }
     saveTable(form: NgForm) {
+        for (let i = 0 ; i < 14 ; i++) {
+            const r = 'remplacement' + i ;
+            if ( form.value[r] === true) {
+                console.log('remplacement à faire' + i );
+                let seance: string;
+                if (i % 2 !== 0 ) { seance = 'Afternoon'} else {  seance = 'Morning'}
+                const add = i / 2 ;
+                const dateR = new Date();
+                const current = new Date(this.astreintes[0].semaine.debutSemaine);
+                dateR.setDate(current.getDate() + add);
+                console.log(dateR);
+                const json = {
+                    'user': '/api/utilisateurs/2',
+                    'astreinte': 'api/astreintes/' + this.astreintes[0].id,
+                    'seance': seance,
+                    'date': dateR,
+                    'num': i
+                };
+                console.log(json);
+                this.accueilService.addRemplacement(json).subscribe((val) => {
+                    console.log('POST call add remplacement success', val);
+                    this.accueilService.getAstreintes(this.idSemaine, this.idVivier)
+                        .subscribe(data => this.astreintes = data);
+                });
+            }
+        }
         if ( form.value.inscrire === true) {
             const addAstreinte = {'user': '/api/utilisateurs/1',
                     'semaine': '/api/semaines/' + this.idSemaine,
@@ -67,7 +96,23 @@ export class AccueilComponent implements OnInit {
             this.formatJsonToXls(this.exportJson)});
 
     }
-
+    existRemplacement(r: Remplacement[], i: number) {
+        if ((r != null) && (r.length !== 0)) {
+            for ( const remp of r ) {
+                if (remp.num === i ) { return true; }
+            }
+        }
+        return false;
+    }
+    getRemplacementUser(r: Remplacement[], i: number) {
+        if ((r != null) && (r.length !== 0)) {
+            for ( const remp of r ) {
+                if (remp.num === i ) {
+                    return remp.user['nom'] + ' ' + remp.user['prenom'];
+                }
+            }
+        }
+    }
     formatJsonToXls(exportJson) {
     console.log(this.exportJson);
     const astreinteJson: XlsFormatEntity[] = new Array();

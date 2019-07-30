@@ -1,4 +1,5 @@
 import {Semaine} from './semaine.entity';
+import {Remplacement} from './remplacement.entity';
 
 export interface Astreinte {
     id: number,
@@ -7,4 +8,5 @@ export interface Astreinte {
     rapport: object,
     semaine: Semaine,
     vivier: object,
+    remplacements: Remplacement[],
 }
