@@ -1,0 +1,80 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Liste des utlisateurs</h4>
+                        <p class="card-category"> veuillez choisir le type de l'utilisateur:</p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <select class="form-control" id="sel1" name="sellist1">
+                                    <option>Admin Local</option>
+                                    <option>Admin National</option>
+                                    <option>Simple Utilisateur</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-block">Recherche</button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead class=" text-primary">
+                                <th>Nom</th>
+                                <th>Prenom </th>
+                                <th>Email</th>
+                                </thead>
+                                <tbody>
+
+                                <tr  *ngFor="let user of users">
+
+                                    <td >
+                                        {{user.nom}}</td>
+
+                                    <td>     {{user.prenom}}</td>
+
+                                    <td>
+                                        {{user.mail}}
+                                    </td>
+                                    <td>
+                                        <div class="col-md-2">
+                                            <button (click)="onDelete(user.id)" class="btn btn-danger">Supprimer</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-2">
+                                            <button (click)="updateUser(user)" class="btn btn-group">Editer</button>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+
+
+                                </tbody>
+
+                            </table>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+

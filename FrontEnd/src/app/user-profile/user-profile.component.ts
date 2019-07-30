@@ -1,15 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {UserService} from '../services/userService';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+    constructor(private userService: UserService) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.resetForm();
+    }
 
+    resetForm(form?: NgForm) {
+        if (form != null) {
+            form.resetForm();
+        }
+        this.userService.formData = {
+            id: null,
+            nom: '',
+            prenom: '',
+            mail: '',
+            password: '',
+        }
+    }
+
+    updateUser(form: NgForm) {
+        this.userService.putUSer(form.value).subscribe(res => {
+            this.resetForm(form);
+            this.userService.getUsers();
+        });
+    }
 }

@@ -8,6 +8,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { MaterialModule } from '../../material.module';
 
 
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -20,6 +21,7 @@ import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {RatingModule} from 'ng-starrating';
+import {UserListComponent} from '../../user-list/user-list.component';
 import {LoaderComponent} from '../../loader/loader.component';
 @NgModule({
   imports: [
@@ -44,6 +46,7 @@ import {LoaderComponent} from '../../loader/loader.component';
     AccueilComponent,
     UserProfileComponent,
     NotificationsComponent,
+    UserListComponent,
   ]
 })
 
