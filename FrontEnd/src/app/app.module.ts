@@ -45,7 +45,8 @@ import {UserEditComponent} from './user-edit/user-edit.component';
     ],
     providers: [
         AstreinteService,
-        UserService],
+        UserService,
+        LoaderService],
     entryComponents: [
         UserEditComponent
     ],

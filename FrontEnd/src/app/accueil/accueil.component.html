@@ -1,3 +1,4 @@
+
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
@@ -9,16 +10,15 @@
                         <p class="card-category"> ..</p>
                     </div>
                     <div class="card-body">
-
-                        <form>
+                        <form (ngSubmit)="export(f3)" #f3="ngForm">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>De </label>
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="dateDebut" ngModel>
                                 </div>
                                 <div class="col-md-6">
                                     <label> à </label>
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="dateFin" ngModel>
 
                                 </div>
 
@@ -66,12 +66,13 @@
                         <p class="card-category"> Veuillez choisir la semaine à afficher</p>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form (ngSubmit)="refreshTable(f)" #f="ngForm">
                             <div class="row">
                                 <div class="col-md-10">
-                                    <select class="form-control" id="sel1" name="sellist1" >
-                                        <option *ngFor="let semaine of semaines">
-                                            S{{semaine.number}} Du Vendredi {{semaine.dateDeb| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.dateFin| date: 'dd/MM/yyyy'}}</option>
+                                    <select class="form-control" id="sel1" name="semaineChoisi" ngModel >
+                                        <option hidden>--Selectionner une semaine--</option>
+                                        <option *ngFor="let semaine of semaines" [ngValue]="semaine.id">
+                                            S{{semaine.numSemaine}} Du Vendredi {{semaine.debutSemaine| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.finSemaine| date: 'dd/MM/yyyy'}}</option>
 
                                     </select>
 
@@ -82,27 +83,29 @@
                             </div>
 
                         </form>
-                        <form>
+                        <form (ngSubmit)="saveTable(f2)" #f2="ngForm">
 
                             <br>
                             <div class="row">
+
                                 <div class="col-md-6">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                        <label class="custom-control-label" for="customCheck1">M'inscrire pour toute la semaine</label>
+                                    <div class="custom-control custom-checkbox" *ngIf="idSemaine!=null && astreintes!=null"  >
+                                        <input type="checkbox" class="custom-control-input" id="ins" ngModel name="inscrire">
+                                        <label class="custom-control-label" for="ins">M'inscrire pour toute la semaine</label>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                        <label class="custom-control-label" for="customCheck1">Export XLS de la semaine</label>
+                                    <div class="custom-control custom-checkbox" *ngIf="astreintes">
+                                        <input type="checkbox" class="custom-control-input" id="xls" ngModel name="export" >
+                                        <label class="custom-control-label" for="xls">Export XLS de la semaine</label>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="table-responsive row">
-                                <table class="table table-striped table-bordered">
+                                <table class="table table-striped table-bordered" *ngIf="astreintes!=null">
+
                                     <thead class=" text-primary">
                                     <th rowspan="2" class="text-center">Vivier</th>
                                     <th colspan="2" class="text-center">
@@ -147,83 +150,22 @@
                                     <th class="text-center">Après-midi</th>
 
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Mon Vivier</td>
-
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                                <label class="custom-control-label" for="customCheck1">Remplacer</label>
+                                    <tbody *ngIf="astreintes!=null">
+                                    <tr     *ngFor="let astreinte of astreintes" >
+                                        <td>{{astreinte.vivier.label}}</td>
+                                        <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
+<!--                                            {{console.log('********'+number)}}-->
+                                            <div class="custom-control custom-checkbox" *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock" >
+<!--                                                <input type="hidden" id="custId" name="custId" value="{{existRemplacement(number,astreinte) }}">-->
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="remplacement{{number}}" name="remplacement{{number}}"  ngModel>
+                                                <label class="custom-control-label"  for="remplacement{{number}}" >Remplacer</label>
+                                                {{astreinte.user.nom +' ' +astreinte.user.prenom }}
+<!--                                                <p *ngIf="!existRemplacement(number,astreinte); else elseBlock">{{astreinte.user.nom +' ' +astreinte.user.prenom }}</p>-->
+<!--                                                <ng-template #elseBlock>{{getRemplacementUser(number,astreinte) }}</ng-template>-->
                                             </div>
+                                            <ng-template #elseBlock>{{getRemplacementUser(astreinte.remplacements,number)}}</ng-template>
                                         </td>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                                <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                            </div>
-                                        </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td> <td>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" >
-                                            <label class="custom-control-label" for="customCheck1">Remplacer</label>
-                                        </div>
-                                    </td>
-
 
                                     </tr>
                                     </tbody>

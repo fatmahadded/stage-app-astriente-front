@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
+import { MaterialModule } from '../../material.module';
+
 
 
 import {
@@ -20,6 +22,7 @@ import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {RatingModule} from 'ng-starrating';
 import {UserListComponent} from '../../user-list/user-list.component';
+import {LoaderComponent} from '../../loader/loader.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +36,9 @@ import {UserListComponent} from '../../user-list/user-list.component';
     MatSelectModule,
     MatTooltipModule,
     RatingModule,
+    MaterialModule,
+  ],
+  exports: [
   ],
   declarations: [
     RapportComponent,
