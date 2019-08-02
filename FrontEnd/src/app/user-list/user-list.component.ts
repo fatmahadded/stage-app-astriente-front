@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService, Utilsateur} from '../services/userService';
+import {Utilisateur} from '../../Entity/utilisateur.entity';
+import {UserService, UtilisateurForm} from '../../Service/user.service';
 import {NgForm} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UserEditComponent} from '../user-edit/user-edit.component';
+import {UserAddComponent} from '../user-add/user-add.component';
 
 @Component({
     selector: 'app-user-list',
@@ -40,14 +42,21 @@ export class UserListComponent implements OnInit {
     onDelete(id: number) {
         if (confirm('Are you sure to delete this user?')) {
             this._userService.deleteUser(id).subscribe(res => {
-                this.users = this.users.filter(user => user.id !== id);
-                console.log(this.users)
+                // this.users = this.users.filter(user => user.id !== id);
+                // console.log(this.users)
+                this._userService.getUsers().subscribe(data => {
+                    this.users = data;
+                })
             });
         }
     }
 
-    updateUser(user: Utilsateur) {
+    updateUser(user: UtilisateurForm) {
         const modalRef = this._modalService.open(UserEditComponent);
         modalRef.componentInstance.user = user;
+    }
+
+    addUser() {
+        const modalRef = this._modalService.open(UserAddComponent);
     }
 }

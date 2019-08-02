@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {UserService, Utilsateur} from '../services/userService';
+import { Utilisateur} from '../../Entity/utilisateur.entity';
+import {UserService, UtilisateurForm} from '../../Service/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserListComponent} from '../user-list/user-list.component';
 
 @Component({
+    providers: [ UserListComponent ],
     selector: 'app-user-edit',
     templateUrl: './user-edit.component.html',
     styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
 
-    user: Utilsateur;
+    user: UtilisateurForm;
     userForm: FormGroup;
 
     constructor(public modal: NgbActiveModal,
@@ -35,8 +38,8 @@ export class UserEditComponent implements OnInit {
     editUser() {
         let temp = null;
         console.log(this.userForm.value);
-        this.userservice.putUSer(this.userForm.value)
-            .subscribe(data => temp = data);
-        console.log('test' + temp);
+        this.userservice.putUser(this.userForm.value)
+            .subscribe(data => {temp = data; console.log('test' + temp); });
+        this.modal.dismiss('Cross click');
     }
 }
