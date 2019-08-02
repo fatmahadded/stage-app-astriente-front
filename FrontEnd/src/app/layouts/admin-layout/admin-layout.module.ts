@@ -20,8 +20,17 @@ import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {RatingModule} from 'ng-starrating';
-import {LoaderComponent} from '../../loader/loader.component';
+import {UserListComponent} from '../../user-list/user-list.component';
+import {TokenInterceptor} from '../../token.interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 @NgModule({
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
@@ -44,6 +53,9 @@ import {LoaderComponent} from '../../loader/loader.component';
     AccueilComponent,
     UserProfileComponent,
     NotificationsComponent,
+    UserListComponent
+
+
   ]
 })
 
