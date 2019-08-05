@@ -45,6 +45,14 @@ export class UserService {
             })
     }
 
+    getAllUsers() {
+        this.showLoader();
+        return this.http.get<Utilisateur[]>(API_URL + '/api/utilisateurs.json')
+            .finally(() => {
+                this.onEnd();
+            })
+    }
+
     getUsers(): Observable<Utilisateur[]> {
         this.showLoader();
         return this.http.get<Utilisateur[]>(API_URL + '/api/utilisateurs')
