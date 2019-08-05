@@ -11,58 +11,112 @@
                     </div>
                     <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <select class="form-control" id="sel1" name="sellist1">
-                                        <option>2019</option>
-                                        <option>2018</option>
-                                        <option>2017</option>
-                                        <option>2016</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary">Actualiser</button>
-                                </div>
+                        <div class="row">
+                            <form [formGroup]="searchForm"
+                                  class="col-12"
+                            (ngSubmit)="onSearch()">
+                            <div class="col-md-8">
+                                <select class="form-control"
+                                        formControlName="year"
+                                        id="sel1"
+                                        name="sellist1">
+                                    <option>2019</option>
+                                    <option>2018</option>
+                                    <option>2017</option>
+                                    <option>2016</option>
+                                </select>
                             </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary"
+                                        type="submit"
 
-
-
-
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered">
-                                    <thead class=" text-primary">
-                                    <th>Semaine</th>
-                                    <th>Rapport d'astreinte</th>
-                                    <th>Repos obtenu</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                S1 du vendredi 04/01/2019 au Jeudi 10/01/2019
-                                            </td>
-                                            <td><a>
-                                                <i class="material-icons">check_circle_outline</i> </a>
-                                            </td>
-                                            <td> 5 Heures </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-
-                                                S29 du vendredi 05/07/2019 au Jeudi 11/07/2019
-                                            </td>
-                                            <td>
-                                                <a [routerLink]="['/rapport']">
-                                                <i class="material-icons">radio_button_unchecked</i>
-                                                </a>
-                                            </td>
-                                            <td> -- </td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-
-
+                                >Actualiser</button>
                             </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                       <div class="container-fluid">
+                           <div class="row">
+                               <div class="col-md-12  line">
+
+<!--                        <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 alert alert-danger "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">ReposTotal :   {{astreinte.user.repos.nombre_heures}} </p>  </div>-->
+<!--                        <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 alert alert-danger "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Reliquat :   {{astreinte.user.repos.nombre_heures%4}} </p>  </div>-->
+<!--                                   <div *ngFor="let astreinte of astreintes ;let i=index;" > <p class="col-md-12   alert alert-danger"   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Nombre De jour :   {{(astreinte.user.repos.nombre_heures-astreinte.user.repos.nombre_heures%4)/8}} </p> </div>-->
+
+                                   <div class="alert alert-danger">
+                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                           <i class="material-icons">close</i>
+                                       </button>
+                                       <span>
+                                                                               <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12  "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">ReposTotal :   {{astreinte.user.repos.nombre_heures}} </p>  </div>
+                                           </span>
+                                   </div>
+
+
+                                   <div class="alert alert-danger">
+                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                           <i class="material-icons">close</i>
+                                       </button>
+                                       <span>
+                                                              <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Reliquat :   {{astreinte.user.repos.nombre_heures%4}} </p>  </div>
+                                           </span>
+                                   </div>
+
+                                   <div class="alert alert-danger">
+                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                           <i class="material-icons">close</i>
+                                       </button>
+                                       <span>
+                                                              <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Salaire :   {{astreinte.user.repos.repo_salaire}} </p>  </div>
+                                           </span>
+                                   </div>
+
+                                   <div class="alert alert-danger">
+                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                           <i class="material-icons">close</i>
+                                       </button>
+                                       <span>
+                                       <div *ngFor="let astreinte of astreintes ;let i=index;" > <p class="col-md-12 "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Nombre De jour :   {{(astreinte.user.repos.nombre_heures-astreinte.user.repos.nombre_heures%4)/8}} </p> </div>
+                                           </span>
+                                   </div>
+                       </div>
+                       </div>
+                       </div>
+                        </div>
+                        <div class="table-responsive">
+
+                            <table class="table table-striped table-bordered">
+                                <thead class=" text-primary">
+                                <th>Semaine</th>
+                                <th>Rapport d'astreinte</th>
+                                <th>Repos obtenu</th>
+                                </thead>
+                                <tbody>
+
+                                <tr *ngFor="let astreinte of astreintes">
+                                    <td>
+                                        S{{astreinte.semaine.num_semaine}} Du
+                                        Vendredi {{astreinte.semaine.debut_semaine| date: 'dd/MM/yyyy'}} au
+                                        Jeudi {{astreinte.semaine.fin_semaine| date: 'dd/MM/yyyy'}}
+                                    </td>
+                                    <td>
+                                        <a *ngIf="astreinte.rapport && astreinte.rapport.id ">
+                                            <i class="material-icons">check_circle_outline</i>
+                                        </a>
+                                        <a *ngIf="!astreinte.rapport"
+                                           [routerLink]="['/rapport']">
+                                            <i class="material-icons">radio_button_unchecked</i>
+                                        </a>
+                                    </td>
+                                    <td *ngIf="!astreinte.rapport"> ----</td>
+                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos}}</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+
+
+                        </div>
 
                     </div>
 

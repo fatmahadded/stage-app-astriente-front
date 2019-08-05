@@ -62,7 +62,7 @@
 
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Astreite par semaine</h4>
+                        <h4 class="card-title ">Astreinte par semaine</h4>
                         <p class="card-category"> Veuillez choisir la semaine à afficher</p>
                     </div>
                     <div class="card-body">
@@ -71,7 +71,7 @@
                                 <div class="col-md-10">
                                     <select class="form-control" id="sel1" name="sellist1" >
                                         <option *ngFor="let semaine of semaines">
-                                            S{{semaine.number}} Du Vendredi {{semaine.dateDeb| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.dateFin| date: 'dd/MM/yyyy'}}</option>
+                                            S{{semaine.numSemaine}} Du Vendredi {{semaine.debutSemaine| date: 'dd/MM/yyyy'}} au Jeudi {{semaine.finSemaine| date: 'dd/MM/yyyy'}}</option>
 
                                     </select>
 

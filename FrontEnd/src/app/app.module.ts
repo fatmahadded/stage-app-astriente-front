@@ -1,10 +1,12 @@
+import  {GetService} from './services/get.service';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
-
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
@@ -19,6 +21,7 @@ import { HistoriqueComponent } from './historique/historique.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { RatingModule } from 'ng-starrating';
 import {AstreinteService} from './astreinte.service';
+import { TestComponent } from './test/test.component';
 
 
 @NgModule({
@@ -26,6 +29,7 @@ import {AstreinteService} from './astreinte.service';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+      BrowserModule,
     HttpClientModule,
     HttpModule,
     RatingModule,
@@ -38,11 +42,12 @@ import {AstreinteService} from './astreinte.service';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    TestComponent
 
 
   ],
-  providers: [AstreinteService],
+  providers: [AstreinteService, GetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
