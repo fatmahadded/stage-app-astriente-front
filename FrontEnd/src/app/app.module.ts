@@ -22,12 +22,13 @@ import { HistoriqueComponent } from './historique/historique.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { RatingModule } from 'ng-starrating';
 import {AstreinteService} from './astreinte.service';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
+    NgbModule,
     ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
@@ -42,7 +43,6 @@ import {AstreinteService} from './astreinte.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-
 
   ],
   providers: [RetourService,

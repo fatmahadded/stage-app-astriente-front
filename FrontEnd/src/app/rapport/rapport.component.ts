@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormArray, FormBuilder, Validators} from '@angular/forms';
-import {StarRatingComponent} from 'ng-starrating';
-import {RetourService} from '../service/Retour.service';
-import {Retour} from '../models/Retour.model'
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {RapportService} from '../service/Rapport.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,30 +11,19 @@ import {Retour} from '../models/Retour.model'
 })
 export class RapportComponent implements OnInit {
 
-    confirmFrom: FormGroup;
-    interventions = [];
-    i = 0;
-
-// parmoi//
-    constructor(private formBuilder: FormBuilder, private  retourService: RetourService) {
+    RapportForm: FormGroup;
+    constructor(private formBuilder: FormBuilder, private  rapportservice: RapportService,
+                private router: Router) {
     };
 
-    rowData: Retour[];
-
     ngOnInit() {
-        this.initform();
-       /* this.retourService.getRetour().subscribe(
-            reponse => {
-                this.rowData = reponse;
-            },
-            err => {
-                this.rowData = null;
-            }
-        );*/
+        this.rapportform();
     }
 
-    initform() {
-        this.confirmFrom = this.formBuilder.group({
+    rapportform() {
+        this.RapportForm = this.formBuilder.group({
+            note: [0, Validators.required],
+            Interventions: this.formBuilder.array([]),
             entreeAppreciated: ['', Validators.required],
             entreeToImprove: ['', Validators.required],
             moyensAppreciated: ['', Validators.required],
@@ -45,30 +33,20 @@ export class RapportComponent implements OnInit {
             interventionCommentaires: ['', Validators.required]
         });
     }
-
-    add() {
-        this.i++;
-        this.interventions.push({value: 'intervention' + this.i});
-    }
-
-    onRate($event: { oldValue: number, newValue: number, starRating: StarRatingComponent }) {
-        // alert(`Old Value:${$event.oldValue},
-        //   New Value: ${$event.newValue},
-        //   Checked Color: ${$event.starRating.checkedcolor},
-        //   Unchecked Color: ${$event.starRating.uncheckedcolor}`);
-
-    }
-
-    addRetour() {
-        const formData = this.confirmFrom.value;
-        console.log(formData);
-        return this.retourService.addRetour(formData).subscribe(data => {
-            console.log(data);
-        });
-
-    }
-
     addRapport() {
-        console.log('addRapport');
+        const rapportData = this.RapportForm.value;
+        return this.rapportservice.addRapport(rapportData).subscribe(date => {
+            console.log(date)
+        });
+       /*return this.router.navigate(['/historique']); */
+    }
+    add() {
+        const intervention = this.RapportForm.controls.Interventions as FormArray;
+        intervention.push(this.formBuilder.group({
+            label: ['', Validators.required],
+            date: ['', Validators.required],
+            heureDebut: ['', Validators.required],
+            heureFin: ['', Validators.required],
+        }));
     }
 }

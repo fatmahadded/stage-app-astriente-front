@@ -18,20 +18,22 @@ import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {RatingModule} from 'ng-starrating';
+import {NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    RatingModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+        RatingModule,
+        NgbRatingModule,
+    ],
   declarations: [
     RapportComponent,
     HistoriqueComponent,

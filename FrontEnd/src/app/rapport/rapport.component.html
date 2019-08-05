@@ -1,168 +1,187 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Interventions</h4>
-                        <p class="card-category">Ajouter les interventions de cette astreinte</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-md btn-so" (click)="add()">
-                                    <i class="material-icons">add_circle_outline</i>
-                                    <span>Ajouter intervention</span>
-                                </button>
-                            </div>
-                            <div class="col-md-8">
+<form [formGroup]="RapportForm" (ngSubmit)=" addRapport()">
+    <div class="main-content" xmlns="http://www.w3.org/1999/html">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
 
-                                <div *ngFor="let intervention of interventions; let in=index" class="border">
-                                    <form>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
-
-                                                <mat-form-field class="example-full-width">
-                                                    <textarea matInput placeholder="Evènement"></textarea>
-                                                </mat-form-field>
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Date" type="date">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Heure de début" type="time">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <mat-form-field class="example-full-width">
-                                                    <input matInput placeholder="Heure de fin" type="time">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-
-                                    </form>
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Interventions</h4>
+                            <p class="card-category">Ajouter les interventions de cette astreinte</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-md btn-so" (click)="add()">
+                                        <i class="material-icons">add_circle_outline</i>
+                                        <span>Ajouter intervention</span>
+                                    </button>
                                 </div>
+                                <div class="col-md-8">
+                                    <div formArrayName="Interventions">
+                                        <div  [formGroupName]="ind"
+                                                *ngFor="let intervention of RapportForm.controls.Interventions?.controls ;
+                                         let ind=index "
+                                                class="border mb-2">
+                                            <ng-container>
+                                                <div class="row px-4">
+                                                    <div class="col-md-12">
+                                                        <mat-form-field class="example-full-width">
+                                                        <textarea matInput placeholder="Evènement"
+                                                                  formControlName="label"></textarea>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="row px-4">
+                                                    <div class="col-md-12">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput placeholder="Date" type="date"
+                                                                   formControlName="date">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="row px-4">
+                                                    <div class="col-md-6">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput placeholder="Heure de début" type="time"
+                                                                   formControlName="heureDebut">
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput placeholder="Heure de fin" type="time"
+                                                                   formControlName="heureFin">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div class="clearfix"></div>
+                                        </div>
 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <button mat-raised-button type="submit" class="btn btn-danger pull-right">Soumettre</button>
                 </div>
-                <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="addRapport()">Soumettre</button>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="javascript:void(0)">
-                            <img class="img" src="./assets/img/user.png"/>
-                        </a>
-                    </div>
-                    <div class="card-body">
-
-                        <h4 class="card-title">Renseignement</h4>
-                        <form>
-
-
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="javascript:void(0)">
+                                <img class="img" src="./assets/img/user.png"/>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Renseignement</h4>
                             <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Nom" value="Foulen">
+                                <input matInput placeholder="Nom">
                             </mat-form-field>
                             <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Prenom" value="Ben Foulen">
+                                <input matInput placeholder="Prenom">
                             </mat-form-field>
                             <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Equipier" value="Chef">
+                                <input matInput placeholder="Equipier">
                             </mat-form-field>
-                        </form>
+                        </div>
                     </div>
-                </div>
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="javascript:void(0)">
-                            <img class="img" src="./assets/img/star.png"/>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Notez le déroulement de l'astreinte</h4>
-                        <star-rating value="0" checkedcolor="red"
-                                     uncheckedcolor="black" size="24px"    readonly="false" (rate)="onRate($event)"></star-rating>
-                        <!-- Large modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-                            Cliquez ici pour ajouter des retours
-                        </button>
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="javascript:void(0)">
+                                <img class="img" src="./assets/img/star.png"/>
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <h4 class="card-title">Notez le déroulement de l'astreinte</h4>
+                            <ngb-rating [formControl]="RapportForm.controls.note" [max]="5">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <!-- Large modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target=".bd-example-modal-lg">
+                                Cliquez ici pour ajouter des retours
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="card-title">Retours</h4>
+                        <p class="card-category">Ajoutez vos retours</p>
+                    </div>
+                    <div class="card-body">
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">Retours</h4>
-                    <p class="card-category">Ajoutez vos retours</p>
-                </div>
-                <div class="card-body">
-                    <form  [formGroup]="confirmFrom"(ngSubmit)="addRetour()">
                         <div class="row">
                             <div class="col-md-12">
-                                <label style="color: black">Entrée dans le dispositif (réunion d'entrée / sortie d'astreinte : contenu, durée, format, etc..)</label>
+                                <label style="color: black">Entrée dans le dispositif (réunion d'entrée / sortie
+                                    d'astreinte : contenu, durée, format, etc..)</label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce que vous avez apprécié" formControlName="entreeAppreciated"></textarea>
+                                    <textarea matInput placeholder="Ce que vous avez apprécié"
+                                              formControlName="entreeAppreciated"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé" formControlName="entreeToImprove"></textarea>
+                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé"
+                                              formControlName="entreeToImprove"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <label style="color: black">Moyens mis à disposition<br/>
-                                <ul>
-                                    <li>Matériels et applications (iphone, PC potable, i-message, etc )</li>
-                                    <li>Documents (procédures, etc)</li>
-                                </ul></label>
+                                    <ul>
+                                        <li>Matériels et applications (iphone, PC potable, i-message, etc )</li>
+                                        <li>Documents (procédures, etc)</li>
+                                    </ul>
+                                </label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce que vous avez apprécié" formControlName="moyensAppreciated"></textarea>
+                                    <textarea matInput placeholder="Ce que vous avez apprécié"
+                                              formControlName="moyensAppreciated"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé" formControlName="moyensToImprove"></textarea>
+                                    <textarea matInput placeholder="Ce qui doit être amélioré/développé"
+                                              formControlName="moyensToImprove"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label style="color: black">Interventions dans le cadre de l'astreinte et l'organisation de l'équipe:
-                                    </label>
+                                <label style="color: black">Interventions dans le cadre de l'astreinte et l'organisation
+                                    de l'équipe:
+                                </label>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Bonne pratique" formControlName="interventionBonnePratique"></textarea>
+                                    <textarea matInput placeholder="Bonne pratique"
+                                              formControlName="interventionBonnePratique"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Difficultés" formControlName="interventionDifficultes"></textarea>
+                                    <textarea matInput placeholder="Difficultés"
+                                              formControlName="interventionDifficultes"></textarea>
                                 </mat-form-field>
                                 <mat-form-field class="example-full-width">
-                                    <textarea matInput placeholder="Commentaires libres" formControlName="interventionCommentaires"></textarea>
+                                    <textarea matInput placeholder="Commentaires libres"
+                                              formControlName="interventionCommentaires"></textarea>
                                 </mat-form-field>
                             </div>
                         </div>
-
-                        <button mat-raised-button type="submit" class="btn btn-danger pull-right">Confirmer</button>
+                        <button mat-raised-button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Confirmer</button>
                         <div class="clearfix"></div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
