@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ajouter un utilisateur</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm" (ngSubmit)="userAdd()">
+        <div class="form-group">
+            <label>Nom</label>
+            <input name="FullName"
+                   class="form-control" formControlName="nom">
+            <div class="validation-error" *ngIf="userForm.controls.nom.invalid">This field is
+                required.
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Prenom</label>
+            <input name="Position"
+                   formControlName="prenom"
+                   class="form-control">
+        </div>
+
+        <div class="form-group ">
+            <label>Mail</label>
+            <input type="email" name="EMPCode"
+                   formControlName="mail"
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Mot de passe</label>
+            <input type="password" name="Position"
+                   formControlName="password"
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Vivier</label>
+            <input name="Position"
+                   formControlName="vivier"
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Role</label>
+            <select class="form-control" id="sel1" name="sellist1" formControlName="roles">
+                <option>Utilisateur</option>
+                <option>Admin Local</option>
+                <option>Admin National</option>
+
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit"
+                    class="form-group"
+                    [disabled]="userForm.invalid"
+                    class="btn btn-lg btn-block">SUBMIT
+            </button>
+        </div>
+    </form>
+</div>
+<!--<div class="modal-footer">-->
+<!--  <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
+<!--</div>-->
