@@ -8,5 +8,12 @@ export interface Astreinte {
     rapport: object,
     semaine: Semaine,
     vivier: object,
+    repos: Repos;
     remplacements: Remplacement[],
+}
+
+
+export interface Repos {
+    nombre_heures: number;
+    repo_salaire: number;
 }

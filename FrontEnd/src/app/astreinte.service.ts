@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {AuthService} from '../Service/auth.service';
 
 export interface Semaine {
     id: Number,
@@ -17,7 +18,7 @@ const API_URL = 'http://localhost:8000';
 })
 export class AstreinteService {
 
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient, private _authService: AuthService) {
     }
 
     getUserAstreintes(year: string = ''): Observable<any[]> {
@@ -47,10 +48,12 @@ export class AstreinteService {
         //         }
         //     }
         // ]);
+        const idUser = this._authService.getIdUser();
+        console.log(idUser);
         if (year === '') {
-            return this._http.get<any[]>(API_URL + '/api/user/1/astreinte');
+            return this._http.get<any[]>(API_URL + `/api/user/${idUser}/astreinte`);
         } else {
-            return this._http.get<any[]>(API_URL + '/api/user/1/astreinte?year=' + year);
+            return this._http.get<any[]>(API_URL + `/api/user/${idUser}/astreinte?year=${year}`);
         }
     }
 
