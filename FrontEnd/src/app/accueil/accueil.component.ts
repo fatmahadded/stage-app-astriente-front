@@ -7,6 +7,7 @@ import {Remplacement} from '../../Entity/remplacement.entity';
 import * as jwt_decode from 'jwt-decode';
 import {AuthService} from '../../Service/auth.service';
 import {UserService} from '../../Service/user.service';
+import {Semaine} from '../../Entity/semaine.entity';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class AccueilComponent implements OnInit {
     console = console;
     private role;
     private usersByVivier;
+    private allUsers;
+    private viviers;
 
 
     constructor(private accueilService: AccueilService, private authService: AuthService, private userService: UserService) {
@@ -38,6 +41,11 @@ export class AccueilComponent implements OnInit {
         if (this.role === 'ROLE_ADMIN') {
             this.getUsersByVivier();
         }
+        if (this.role === 'ROLE_ADMIN_NAT') {
+            this.getAllUsers();
+            this.accueilService.getURL('/api/viviers.json')
+                .subscribe(data => this.viviers = data);
+        }
     }
 
     getUsersByVivier() {
@@ -45,10 +53,68 @@ export class AccueilComponent implements OnInit {
             .subscribe(data => this.usersByVivier = data)
     }
 
+    getUsersBy(vivier) {
+        const users = [];
+        if (this.allUsers != null) {
+            for (const user of this.allUsers) {
+                if (user.vivier.id === vivier) {
+                    users.push(user);
+                }
+            }
+        }
+        console.log(users);
+        return users;
+    }
+
+    getAllUsers() {
+        this.userService.getAllUsers()
+            .subscribe(data => {
+                    this.allUsers = data;
+
+                }
+            )
+    }
+
     refreshTable(form: NgForm) {
         this.idSemaine = form.value.semaineChoisi;
-        this.accueilService.getAstreintes(this.idSemaine, this.authService.getVivier())
-            .subscribe(data => this.astreintes = data);
+        this.getAstreintes();
+    }
+
+    getAstreintes() {
+        if (this.role === 'ROLE_ADMIN_NAT') {
+            this.accueilService.getAllAstreintes(this.idSemaine).subscribe(data => {
+                this.astreintes = data;
+                for (const vivier of this.viviers) {
+                    let exist = false;
+                    for (const astreinte of data) {
+                        if (vivier.id === astreinte.vivier['id']) {
+                            exist = true;
+                        }
+                    }
+                    if (exist === false) {
+                        const new_astreinte: Astreinte = {
+                            'vivier': vivier, 'id': 0,
+                            'user': null,
+                            'paye': '',
+                            'rapport': null,
+                            'semaine': null,
+                            remplacements: null
+                        };
+
+                        this.astreintes.push(new_astreinte)
+                    }
+                }
+                console.log('###############new astreintes')
+                console.log(this.astreintes);
+
+
+            })
+
+
+        } else {
+            this.accueilService.getAstreintes(this.idSemaine, this.authService.getVivier())
+                .subscribe(data => this.astreintes = data);
+        }
     }
 
 
@@ -136,8 +202,7 @@ export class AccueilComponent implements OnInit {
             } else {
                 this.accueilService.addAstreinte(addAstreinte).subscribe((val) => {
                     console.log('POST call successful value returned in body', val);
-                    this.accueilService.getAstreintes(this.idSemaine, this.authService.getVivier())
-                        .subscribe(data => this.astreintes = data);
+                    this.getAstreintes();
 
                     this.accueilService.getURL('/accueil/send/confirmation')
                         .subscribe();
@@ -154,6 +219,43 @@ export class AccueilComponent implements OnInit {
                 });
         }
     }
+
+    saveTableAdminNatXLS(form: NgForm) {
+        if (form.value.export === true) {
+            this.exportJson = this.astreintes;
+            this.formatJsonToXls(this.astreintes);
+        }
+    }
+
+    saveTableAdminNat(form: NgForm, vivier, exist) {
+
+        const addAstreinte = {
+            'user': '/api/utilisateurs/' + form.value.userInscrit,
+            'semaine': '/api/semaines/' + this.idSemaine,
+            'vivier': '/api/viviers/' + vivier
+        };
+        console.log(addAstreinte)
+        console.log('++++++++++++++++++++++++++++++', exist);
+        if (exist === 0) {
+            console.log('#######################################################');
+            this.accueilService.addAstreinte(addAstreinte).subscribe((val) => {
+                console.log('POST call successful value returned in body', val);
+                this.getAstreintes();
+                this.accueilService.getURL('/accueil/send/confirmation')
+                    .subscribe();
+            });
+        }
+        this.accueilService.updateAstreinte(form.value.userInscrit, this.astreintes[0].id)
+            .subscribe(() => {
+                    this.getAstreintes();
+
+                    this.accueilService.getURL('/accueil/send/confirmation')
+                        .subscribe();
+                }
+            )
+        ;
+    }
+
 
     export(form: NgForm) {
         const url = '/accueil/astreinteXls/' + form.value.dateDebut + '/' + form.value.dateFin + '/' + this.authService.getVivier();
@@ -191,32 +293,34 @@ export class AccueilComponent implements OnInit {
         const astreinteJson: XlsFormatEntity[] = [];
         if (this.exportJson && this.exportJson.length > 0) {
             this.exportJson.forEach((astreinte: any) => {
-                const a: XlsFormatEntity = {
-                    id: 0,
-                    user: '',
-                    paye: '',
-                    rapport: '',
-                    semaineDeb: '',
-                    semaineFin: '',
-                    vivier: '',
-                };
-                a.id = astreinte.id;
-                a.user = astreinte.user.nom + ' ' + astreinte.user.prenom;
-                if (astreinte.paye) {
-                    a.paye = astreinte.paye.montant;
-                } else {
-                    a.paye = '--'
+                if (astreinte.id !== 0) {
+                    const a: XlsFormatEntity = {
+                        id: 0,
+                        user: '',
+                        paye: '',
+                        rapport: '',
+                        semaineDeb: '',
+                        semaineFin: '',
+                        vivier: '',
+                    };
+                    a.id = astreinte.id;
+                    a.user = astreinte.user.nom + ' ' + astreinte.user.prenom;
+                    if (astreinte.paye) {
+                        a.paye = astreinte.paye.montant;
+                    } else {
+                        a.paye = '--'
+                    }
+                    a.vivier = astreinte.vivier.label;
+                    a.semaineDeb = astreinte.semaine.debutSemaine;
+                    a.semaineFin = astreinte.semaine.finSemaine;
+                    if (astreinte.rapport) {
+                        a.rapport = 'rapport effectué';
+                    } else {
+                        a.rapport = 'rapport non effectué'
+                    }
+                    console.log('a======', a);
+                    astreinteJson.push(a);
                 }
-                a.vivier = astreinte.vivier.label;
-                a.semaineDeb = astreinte.semaine.debutSemaine;
-                a.semaineFin = astreinte.semaine.finSemaine;
-                if (astreinte.rapport) {
-                    a.rapport = 'rapport effectué';
-                } else {
-                    a.rapport = 'rapport non effectué'
-                }
-                console.log('a======', a);
-                astreinteJson.push(a);
             })
         }
         console.log('modified', astreinteJson);

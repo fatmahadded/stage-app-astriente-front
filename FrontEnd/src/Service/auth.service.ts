@@ -125,7 +125,7 @@ export class AuthService {
         localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
         localStorage.setItem(this.FULL_NAME_USER, user.prenom + ' ' + user.nom);
         localStorage.setItem(this.ID_USER, user.id.toString());
-        localStorage.setItem(this.ID_VIVIER, user.vivier[user.vivier.length - 1]);
+        localStorage.setItem(this.ID_VIVIER, user.vivier['id']);
     }
 
     private removeTokens() {
