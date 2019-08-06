@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AstreinteService} from '../astreinte.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Astreinte} from '../../Entity/astreinte.entity';
 
 @Component({
     selector: 'app-historique',
@@ -10,6 +11,10 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 export class HistoriqueComponent implements OnInit {
     public astreintes: any[] = [];
     searchForm: FormGroup;
+    reposTotal = 0;
+    reliquatTotal = 0;
+    salaireTotal = 0;
+    nombreDejourTotal = 0;
 
     constructor(private astreinteService: AstreinteService,
                 private _formBuilder: FormBuilder) {
@@ -20,6 +25,7 @@ export class HistoriqueComponent implements OnInit {
         this.astreinteService.getUserAstreintes()
             .subscribe(data => {
                 this.astreintes = data;
+                this.caclulReposTotal();
             });
     }
 
@@ -33,10 +39,25 @@ export class HistoriqueComponent implements OnInit {
         this.astreinteService.getUserAstreintes(this.searchForm.value.year)
             .subscribe(data => {
                 this.astreintes = data;
+                this.reposTotal = 0;
+                this.salaireTotal = 0;
+                this.nombreDejourTotal = 0;
+                this.caclulReposTotal();
             });
     }
-}
 
+    caclulReposTotal() {
+        this.astreintes.forEach((astreinte: Astreinte) => {
+            if (astreinte.repos) {
+                this.reposTotal += astreinte.repos.nombre_heures;
+                this.salaireTotal += astreinte.repos.repo_salaire;
+            }
+        });
+        this.reliquatTotal = this.reposTotal % 4;
+        this.nombreDejourTotal = (this.reposTotal - this.reliquatTotal) / 8;
+
+    }
+}
 
 // export class HistoriqueComponent implements OnInit {
 //

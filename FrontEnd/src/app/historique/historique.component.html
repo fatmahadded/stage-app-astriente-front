@@ -12,76 +12,76 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <form [formGroup]="searchForm"
-                                  class="col-12"
-                            (ngSubmit)="onSearch()">
-                            <div class="col-md-8">
-                                <select class="form-control"
-                                        formControlName="year"
-                                        id="sel1"
-                                        name="sellist1">
-                                    <option>2019</option>
-                                    <option>2018</option>
-                                    <option>2017</option>
-                                    <option>2016</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-primary"
-                                        type="submit"
+                            <form (ngSubmit)="onSearch()"
+                                  [formGroup]="searchForm"
+                                  class="col-12">
+                                <div class="col-md-8">
+                                    <select class="form-control"
+                                            formControlName="year"
+                                            id="sel1"
+                                            name="sellist1">
+                                        <option>2019</option>
+                                        <option>2018</option>
+                                        <option>2017</option>
+                                        <option>2016</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary"
+                                            type="submit"
 
-                                >Actualiser</button>
-                            </div>
+                                    >Actualiser
+                                    </button>
+                                </div>
                             </form>
                         </div>
                         <div class="table-responsive">
-                       <div class="container-fluid">
-                           <div class="row">
-                               <div class="col-md-12  line">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12  line">
 
-<!--                        <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 alert alert-danger "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">ReposTotal :   {{astreinte.user.repos.nombre_heures}} </p>  </div>-->
-<!--                        <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 alert alert-danger "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Reliquat :   {{astreinte.user.repos.nombre_heures%4}} </p>  </div>-->
-<!--                                   <div *ngFor="let astreinte of astreintes ;let i=index;" > <p class="col-md-12   alert alert-danger"   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Nombre De jour :   {{(astreinte.user.repos.nombre_heures-astreinte.user.repos.nombre_heures%4)/8}} </p> </div>-->
-
-                                   <div class="alert alert-danger">
-                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                           <i class="material-icons">close</i>
-                                       </button>
-                                       <span>
-                                                                               <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12  "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">ReposTotal :   {{astreinte.user.repos.nombre_heures}} </p>  </div>
-                                           </span>
-                                   </div>
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">ReposTotal :   {{reposTotal}} </p>
+                                            </span>
+                                        </div>
 
 
-                                   <div class="alert alert-danger">
-                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                           <i class="material-icons">close</i>
-                                       </button>
-                                       <span>
-                                                              <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Reliquat :   {{astreinte.user.repos.nombre_heures%4}} </p>  </div>
-                                           </span>
-                                   </div>
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">Reliquat :   {{reliquatTotal}} </p>
+                                            </span>
+                                        </div>
 
-                                   <div class="alert alert-danger">
-                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                           <i class="material-icons">close</i>
-                                       </button>
-                                       <span>
-                                                              <div *ngFor="let astreinte of astreintes ;let i=index;  " > <p class="col-md-12 "    *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Salaire :   {{astreinte.user.repos.repo_salaire}} </p>  </div>
-                                           </span>
-                                   </div>
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">Salaire :   {{salaireTotal}} </p>
+                                            </span>
+                                        </div>
 
-                                   <div class="alert alert-danger">
-                                       <button mat-button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                           <i class="material-icons">close</i>
-                                       </button>
-                                       <span>
-                                       <div *ngFor="let astreinte of astreintes ;let i=index;" > <p class="col-md-12 "   *ngIf="astreinte.rapport && astreinte.rapport.id && i===0 ">Nombre De jour :   {{(astreinte.user.repos.nombre_heures-astreinte.user.repos.nombre_heures%4)/8}} </p> </div>
-                                           </span>
-                                   </div>
-                       </div>
-                       </div>
-                       </div>
+                                        <div *ngIf="astreintes.length > 0" class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                        <span>
+                                                    <p class="col-md-12  ">Nombre De jour  :   {{nombreDejourTotal}} </p>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="table-responsive">
 
@@ -109,7 +109,7 @@
                                         </a>
                                     </td>
                                     <td *ngIf="!astreinte.rapport"> ----</td>
-                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos}}</td>
+                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombre_heures}}</td>
                                 </tr>
                                 </tbody>
 

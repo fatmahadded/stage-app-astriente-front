@@ -9,6 +9,7 @@ import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
 import {GetService} from './services/get.service';
 import {BrowserModule} from '@angular/platform-browser';
+import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
 
@@ -42,6 +43,7 @@ import {TestComponent} from './test/test.component';
         RatingModule,
         ComponentsModule,
         RouterModule,
+        JwtModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
         }),
