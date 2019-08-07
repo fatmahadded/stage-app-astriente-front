@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {UserService} from '../services/userService';
+import {UserService} from '../../Service/user.service';
 
 @Component({
     selector: 'app-user-profile',
@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     updateUser(form: NgForm) {
-        this.userService.putUSer(form.value).subscribe(res => {
+        this.userService.putUser(form.value).subscribe(res => {
             this.resetForm(form);
             this.userService.getUsers();
         });
