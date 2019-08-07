@@ -1,90 +1,112 @@
 <div class="main-content">
     <div class="row">
 
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-md btn-so btn-primary" (click)="addUser()">
+        <div class="col-md-1"></div>
+        <div class="col-md-12">
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <button (click)="addEntite()" class="btn btn-md btn-so btn-primary" type="button">
                 <i class="material-icons">add_circle_outline</i>
-                <span>Ajouter un utilisateur</span>
+                <span> Ajouter une entite</span>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <button (click)="addVivier()" class="btn btn-md btn-so btn-primary" type="button">
+                <i class="material-icons">add_circle_outline</i>
+                <span> Ajouter un viiver</span>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <button (click)="addUser()" class="btn btn-md btn-so btn-primary" type="button">
+                <i class="material-icons">add_circle_outline</i>
+                <span> Ajouter un utilisateur</span>
             </button>
         </div>
-    </div>
-    <div class="container-fluid">
+
+        <br><br><br><br>
+
+        <div class="container-fluid">
 
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Liste des utlisateurs</h4>
-                        <p class="card-category"> veuillez choisir le type de l'utilisateur:</p>
-                    </div>
-                    <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title ">Liste des utlisateurs</h4>
+                            <p class="card-category"> veuillez choisir le type de l'utilisateur:</p>
+                        </div>
+                        <div class="card-body">
 
-                        <div class="row">
-                            <div class="col-md-8">
-                                <select class="form-control" id="sel1" name="sellist1">
-                                    <option>Admin Local</option>
-                                    <option>Admin National</option>
-                                    <option>Simple Utilisateur</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select #list (change)="onUserRoleChange($event)" class="form-control"
+                                            id="sel1" name="sellist1">
+                                        <option *ngFor="let role of roles" [value]="role.value">{{role.title}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-block" type="submit">Recherche</button>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-block">Recherche</button>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class=" text-primary">
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Email</th>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr *ngFor="let user of users; let  userIndex = index">
+
+                                        <td>
+                                            {{user.nom}}</td>
+
+                                        <td>     {{user.prenom}}</td>
+
+                                        <td>
+                                            {{user.mail}}
+                                        </td>
+                                        <td>
+                                            <div class="col-md-2">
+                                                <button (click)="onDelete(user.id)" class="btn btn-danger">Supprimer
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-md-2">
+                                                <button (click)="updateUser(user, userIndex)" class="btn btn-group">Editer</button>
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+
+
+                                    </tbody>
+
+                                </table>
+
+
                             </div>
+
                         </div>
 
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead class=" text-primary">
-                                <th>Nom</th>
-                                <th>Prenom</th>
-                                <th>Email</th>
-                                </thead>
-                                <tbody>
-
-                                <tr *ngFor="let user of users">
-
-                                    <td>
-                                        {{user.nom}}</td>
-
-                                    <td>     {{user.prenom}}</td>
-
-                                    <td>
-                                        {{user.mail}}
-                                    </td>
-                                    <td>
-                                        <div class="col-md-2">
-                                            <button (click)="onDelete(user.id)" class="btn btn-danger">Supprimer
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-2">
-                                            <button (click)="updateUser(user)" class="btn btn-group">Editer</button>
-                                        </div>
-                                    </td>
-
-
-                                </tr>
-
-
-                                </tbody>
-
-                            </table>
-
-
-                        </div>
-
                     </div>
-
                 </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
 
 

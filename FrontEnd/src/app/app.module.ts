@@ -4,6 +4,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {JwtModule} from '@auth0/angular-jwt';
 import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
 
@@ -11,16 +13,26 @@ import {AppComponent} from './app.component';
 // @ts-ignore
 import {RetourService} from './service/Retour.service';
 //import {AstreinteService} from './astreinte.service';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AgmCoreModule} from '@agm/core';
+import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
+import {RatingModule} from 'ng-starrating';
 import {UserService} from '../Service/user.service';
 import {UserEditComponent} from './user-edit/user-edit.component';
 import {LoaderComponent} from './loader/loader.component';
 import {MaterialModule} from './material.module';
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule, MatTooltipModule} from '@angular/material';
+
+
+import {
+    MatButtonModule,
+    MatInputModule,
+    MatRippleModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatSelectModule
+} from '@angular/material';
 import {AuthGuard} from '../Guard/auth.guard';
-import {AgmCoreModule} from '@agm/core';
-import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
-import {RatingModule} from 'ng-starrating';
+import { EntiteAddComponent } from './entite-add/entite-add.component';
+import { VivierAddComponent } from './vivier-add/vivier-add.component';
 import {LoaderService} from '../Service/loader.service';
 
 import {UserAddComponent} from './user-add/user-add.component';
@@ -47,6 +59,7 @@ import {AuthService} from '../Service/auth.service';
         MaterialModule,
         ComponentsModule,
         RouterModule,
+        NgbModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -59,7 +72,10 @@ import {AuthService} from '../Service/auth.service';
         LoaderComponent,
         UserAddComponent,
         LoginComponent,
+        EntiteAddComponent,
+        VivierAddComponent,
         // UserListComponent
+
 
     ],
     providers: [RetourService,
@@ -75,9 +91,10 @@ import {AuthService} from '../Service/auth.service';
         }],
     entryComponents: [
         UserEditComponent,
-        UserAddComponent
+        UserAddComponent,
+        EntiteAddComponent,
+        VivierAddComponent
     ],
-
     bootstrap: [AppComponent]
 })
 export class AppModule {

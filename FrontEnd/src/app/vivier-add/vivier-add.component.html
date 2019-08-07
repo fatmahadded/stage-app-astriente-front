@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Ajouter un vivier</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="vivierForm" (ngSubmit)="vivierAdd()">
+
+    <div class="form-group">
+      <label>label</label>
+      <input name="label"
+             formControlName="label"
+             class="form-control">
+    </div>
+
+
+
+    <div class="form-group">
+      <label>Entite</label>
+      <select class="form-control" id="listentite" formControlName="entite" ngModel>
+        <option *ngFor="let entite of entities" [ngValue]="entite.id">
+          {{entite.label}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit"
+              class="form-group"
+              [disabled]="vivierForm.invalid"
+              class="btn btn-lg btn-block">SUBMIT
+      </button>
+    </div>
+  </form>
+</div>
+<!--<div class="modal-footer">-->
+<!--  <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
+<!--</div>-->
