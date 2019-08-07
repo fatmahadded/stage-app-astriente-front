@@ -5,9 +5,9 @@ import {UserService} from '../../Service/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-    selector: 'app-user-add',
-    templateUrl: './user-add.component.html',
-    styleUrls: ['./user-add.component.scss']
+  selector: 'app-user-add',
+  templateUrl: './user-add.component.html',
+  styleUrls: ['./user-add.component.scss']
 })
 export class UserAddComponent implements OnInit {
 
@@ -47,8 +47,5 @@ export class UserAddComponent implements OnInit {
         this.modal.dismiss('Cross click');
 
     }
-
-
-
 
 }

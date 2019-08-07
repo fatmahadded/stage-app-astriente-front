@@ -25,7 +25,6 @@ export class UserService {
     formData: UtilisateurForm;
     private loaderService;
 
-
     constructor(private http: HttpClient, loaderService: LoaderService) {
         this.loaderService = loaderService;
     }
@@ -89,11 +88,13 @@ export class UserService {
     }
 
     putUser(user: UtilisateurForm) {
+        console.log(user);
         const json = {
             'nom': user.nom,
             'prenom': user.prenom,
             'mail': user.mail
         };
+        console.log(json);
         return this.http.put(API_URL + '/api/utilisateurs/' + user.id, json);
     }
 
@@ -102,10 +103,12 @@ export class UserService {
     }
 
     private showLoader(): void {
+        console.log('show loading');
         this.loaderService.show();
     }
 
     private hideLoader(): void {
+        console.log('hide loading');
         this.loaderService.hide();
     }
 }
