@@ -73,16 +73,8 @@
                             </a>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">Renseignement</h4>
-                            <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Nom">
-                            </mat-form-field>
-                            <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Prenom">
-                            </mat-form-field>
-                            <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Equipier">
-                            </mat-form-field>
+                            <h3 style="color: #1a237e" class="card-title" >{{this.authService.getFullNameUser()}}</h3>
+                            <h4 class="card-category text-gray">Vivier_ID : {{this.authService.getVivier()}}</h4>
                         </div>
                     </div>
                     <div class="card card-profile">
@@ -93,7 +85,7 @@
                         </div>
 
                         <div class="card-body">
-                            <h4 class="card-title">Notez le déroulement de l'astreinte</h4>
+                            <h4 style="color: #311b92" class="card-title">Notez le déroulement de l'astreinte</h4>
                             <ngb-rating [formControl]="RapportForm.controls.note" [max]="5">
                                 <ng-template let-fill="fill" let-index="index">
                                     <span class="star" [class.filled]="fill === 100">&#9733;</span>
@@ -128,7 +120,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <label style="color: black">Entrée dans le dispositif (réunion d'entrée / sortie
+                                <label style="color: #2a3f6c">Entrée dans le dispositif (réunion d'entrée / sortie
                                     d'astreinte : contenu, durée, format, etc..)</label>
                                 <mat-form-field class="example-full-width">
                                     <textarea matInput placeholder="Ce que vous avez apprécié"
@@ -142,7 +134,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label style="color: black">Moyens mis à disposition<br/>
+                                <label style="color: #2a3f6c">Moyens mis à disposition<br/>
                                     <ul>
                                         <li>Matériels et applications (iphone, PC potable, i-message, etc )</li>
                                         <li>Documents (procédures, etc)</li>
@@ -160,7 +152,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label style="color: black">Interventions dans le cadre de l'astreinte et l'organisation
+                                <label style="color: #2a3f6c">Interventions dans le cadre de l'astreinte et l'organisation
                                     de l'équipe:
                                 </label>
                                 <mat-form-field class="example-full-width">

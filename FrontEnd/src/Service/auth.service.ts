@@ -73,11 +73,18 @@ export class AuthService {
     }
 
     refreshToken() {
+        this.showLoader();
+        console.log('refreshing ......');
         return this.http.post<any>(API_URL + '/refresh', {
             'refresh_token': this.getRefreshToken()
-        }).pipe(tap((tokens: Tokens) => {
+        }).pipe(
+            tap((tokens: Tokens) => {
             this.storeJwtToken(tokens.token);
-        }));
+        }),
+        finalize(() => {
+                this.onEnd();
+            })
+        );
     }
 
     getVivier() {

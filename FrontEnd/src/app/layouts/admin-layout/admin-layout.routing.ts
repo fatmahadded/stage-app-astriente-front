@@ -1,6 +1,5 @@
 import {Routes} from '@angular/router';
 
-import {UserProfileComponent} from '../../user-profile/user-profile.component';
 import {NotificationsComponent} from '../../notifications/notifications.component';
 import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
@@ -55,7 +54,6 @@ export const AdminLayoutRoutes: Routes = [
     {path: 'rapport', component: RapportComponent, canActivate: [AuthGuard]},
     {path: 'historique', component: HistoriqueComponent, canActivate: [AuthGuard]},
     {path: 'accueil', component: AccueilComponent, canActivate: [AuthGuard]},
-    {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
     {path: 'user-list', component: UserListComponent, canActivate: [AuthGuard]},
     {path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
 

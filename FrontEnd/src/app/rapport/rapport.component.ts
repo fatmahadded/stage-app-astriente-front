@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RapportService} from '../service/Rapport.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../../Service/auth.service';
 
 
 @Component({
@@ -10,10 +11,11 @@ import {Router} from '@angular/router';
     styleUrls: ['./rapport.component.scss']
 })
 export class RapportComponent implements OnInit {
-
     RapportForm: FormGroup;
+    private allUsers;
+
     constructor(private formBuilder: FormBuilder, private  rapportservice: RapportService,
-                private router: Router) {
+                private router: Router, private authService: AuthService) {
     };
 
     ngOnInit() {
@@ -33,13 +35,16 @@ export class RapportComponent implements OnInit {
             interventionCommentaires: ['', Validators.required]
         });
     }
+
     addRapport() {
         const rapportData = this.RapportForm.value;
         return this.rapportservice.addRapport(rapportData).subscribe(date => {
-            console.log(date)
+            this.router.navigate(['/historique']);
         });
-       /*return this.router.navigate(['/historique']); */
+
+
     }
+
     add() {
         const intervention = this.RapportForm.controls.Interventions as FormArray;
         intervention.push(this.formBuilder.group({
@@ -49,4 +54,5 @@ export class RapportComponent implements OnInit {
             heureFin: ['', Validators.required],
         }));
     }
+
 }
