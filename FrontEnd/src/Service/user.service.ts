@@ -46,6 +46,14 @@ export class UserService {
             });
     }
 
+    getAllUsers() {
+        this.showLoader();
+        return this.http.get<Utilisateur[]>(API_URL + '/api/utilisateurs.json')
+            .finally(() => {
+                this.onEnd();
+            })
+    }
+
     getUsersByViviers(idVivier) {
         this.showLoader();
         return this.http.get<Utilisateur[]>(API_URL + '/api/user/vivier/' + idVivier)

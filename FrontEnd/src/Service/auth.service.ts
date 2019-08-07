@@ -47,6 +47,7 @@ export class AuthService {
 
     logout() {
         this.showLoader();
+        console.log('logout service ')
         return this.http.post<any>(API_URL + '/logout', null)
             .finally(() => {
                 this.doLogoutUser();
@@ -72,11 +73,18 @@ export class AuthService {
     }
 
     refreshToken() {
+        this.showLoader();
+        console.log('refreshing ......');
         return this.http.post<any>(API_URL + '/refresh', {
             'refresh_token': this.getRefreshToken()
-        }).pipe(tap((tokens: Tokens) => {
+        }).pipe(
+            tap((tokens: Tokens) => {
             this.storeJwtToken(tokens.token);
-        }));
+        }),
+        finalize(() => {
+                this.onEnd();
+            })
+        );
     }
 
     getVivier() {
@@ -124,7 +132,7 @@ export class AuthService {
         localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
         localStorage.setItem(this.FULL_NAME_USER, user.prenom + ' ' + user.nom);
         localStorage.setItem(this.ID_USER, user.id.toString());
-        localStorage.setItem(this.ID_VIVIER, user.vivier[user.vivier.length - 1]);
+        localStorage.setItem(this.ID_VIVIER, user.vivier['id']);
     }
 
     private removeTokens() {

@@ -10,13 +10,14 @@ import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
 
 import {AppComponent} from './app.component';
-
+// @ts-ignore
+import {RetourService} from './service/Retour.service';
+//import {AstreinteService} from './astreinte.service';
 import {AgmCoreModule} from '@agm/core';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {RatingModule} from 'ng-starrating';
 import {UserService} from '../Service/user.service';
 import {UserEditComponent} from './user-edit/user-edit.component';
-import {LoaderService} from '../Service/loader.service';
 import {LoaderComponent} from './loader/loader.component';
 import {MaterialModule} from './material.module';
 
@@ -29,26 +30,26 @@ import {
     MatTooltipModule,
     MatSelectModule
 } from '@angular/material';
-import {UserAddComponent} from './user-add/user-add.component';
-import { LoginComponent } from './login/login.component';
 import {AuthGuard} from '../Guard/auth.guard';
-import {TokenInterceptor} from './token.interceptor';
-import {AuthService} from '../Service/auth.service';
 import { EntiteAddComponent } from './entite-add/entite-add.component';
 import { VivierAddComponent } from './vivier-add/vivier-add.component';
+import {LoaderService} from '../Service/loader.service';
+
+import {UserAddComponent} from './user-add/user-add.component';
+import { LoginComponent } from './login/login.component';
+import {TokenInterceptor} from './token.interceptor';
+import {AuthService} from '../Service/auth.service';
 
 
 @NgModule({
     imports: [
         BrowserAnimationsModule,
         FormsModule,
+        NgbModule,
         ReactiveFormsModule,
         HttpClientModule,
         HttpModule,
         RatingModule,
-        ComponentsModule,
-        RouterModule,
-        NgbModule,
         MatButtonModule,
         MatRippleModule,
         MatFormFieldModule,
@@ -56,6 +57,9 @@ import { VivierAddComponent } from './vivier-add/vivier-add.component';
         MatSelectModule,
         MatTooltipModule,
         MaterialModule,
+        ComponentsModule,
+        RouterModule,
+        NgbModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -74,7 +78,8 @@ import { VivierAddComponent } from './vivier-add/vivier-add.component';
 
 
     ],
-    providers: [
+    providers: [RetourService,
+        //AstreinteService,
         UserService,
         LoaderService,
         AuthGuard,

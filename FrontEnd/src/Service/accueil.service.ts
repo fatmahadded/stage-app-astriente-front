@@ -35,8 +35,8 @@ export class AccueilService {
             });
     }
 
-    updateAstreinte(number , id) {
-        const json = { 'user': {'id': number} }
+    updateAstreinte(number, id) {
+        const json = {'user': {'id': number}}
         this.showLoader();
         return this.http.put(API_URL + '/api/astreintes/' + id, json)
             .finally(() => {
@@ -55,6 +55,14 @@ export class AccueilService {
     getAstreintes(idSemaine, idVivier): Observable<Astreinte[]> {
         this.showLoader();
         return this.http.get<Astreinte[]>(API_URL + '/accueil/astreinte/' + idSemaine + '/' + idVivier)
+            .finally(() => {
+                this.onEnd();
+            });
+    }
+
+    getAllAstreintes(idSemaine): Observable<Astreinte[]> {
+        this.showLoader();
+        return this.http.get<Astreinte[]>(API_URL + '/accueil/all/astreinte/' + idSemaine)
             .finally(() => {
                 this.onEnd();
             });
@@ -103,10 +111,12 @@ export class AccueilService {
     }
 
     private showLoader(): void {
+        console.log('show loading');
         this.loaderService.show();
     }
 
     private hideLoader(): void {
+        console.log('hide loading');
         this.loaderService.hide();
     }
 }

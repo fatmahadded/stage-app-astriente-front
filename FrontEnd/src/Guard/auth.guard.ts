@@ -7,7 +7,8 @@ import {Injectable} from '@angular/core';
 })
 export class AuthGuard implements CanActivate {
 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService, private router: Router) {
+    }
 
     canActivate() {
         if (!this.authService.isLoggedIn()) {
