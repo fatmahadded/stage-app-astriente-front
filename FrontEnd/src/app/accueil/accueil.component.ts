@@ -31,7 +31,6 @@ export class AccueilComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(jwt_decode(this.authService.getJwtToken()).roles[0]);
         this.role = jwt_decode(this.authService.getJwtToken()).roles[0];
         this.accueilService.getSemaines()
             .subscribe(data => this.semaines = data);
@@ -61,7 +60,6 @@ export class AccueilComponent implements OnInit {
         for (let i = 0; i < 14; i++) {
             const r = 'remplacement' + i;
             if (form.value[r] === true) {
-                console.log('remplacement à faire' + i);
                 let seance: string;
                 if (i % 2 !== 0) {
                     seance = 'Afternoon'
@@ -72,7 +70,6 @@ export class AccueilComponent implements OnInit {
                 const dateR = new Date();
                 const current = new Date(this.astreintes[0].semaine.debutSemaine);
                 dateR.setDate(current.getDate() + add);
-                console.log(dateR);
                 const json = {
                     'user': '/api/utilisateurs/' + this.authService.getIdUser(),
                     'astreinte': 'api/astreintes/' + this.astreintes[0].id,

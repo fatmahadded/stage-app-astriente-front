@@ -33,19 +33,22 @@
                    formControlName="password"
                    class="form-control">
         </div>
+
         <div class="form-group">
             <label>Vivier</label>
-            <input name="Position"
-                   formControlName="vivier"
-                   class="form-control">
+            <select class="form-control" id="listVivier" formControlName="vivier" ngModel>
+                <option *ngFor="let vivier of viviers" [ngValue]="vivier.id">
+                    {{vivier.label}}
+                </option>
+            </select>
         </div>
+
         <div class="form-group">
             <label>Role</label>
             <select class="form-control" id="sel1" name="sellist1" formControlName="roles">
-                <option>Utilisateur</option>
-                <option>Admin Local</option>
-                <option>Admin National</option>
-
+                <option value="ROLE_USER">Simple Utilisaeur</option>
+                <option Value="ROLE_ADMIN"> Admin Local</option>
+                <option Value="ROLE_ADMIN_NAT"> Admin National</option>
             </select>
         </div>
 

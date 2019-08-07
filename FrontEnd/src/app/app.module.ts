@@ -34,6 +34,8 @@ import { LoginComponent } from './login/login.component';
 import {AuthGuard} from '../Guard/auth.guard';
 import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from '../Service/auth.service';
+import { EntiteAddComponent } from './entite-add/entite-add.component';
+import { VivierAddComponent } from './vivier-add/vivier-add.component';
 
 
 @NgModule({
@@ -66,6 +68,8 @@ import {AuthService} from '../Service/auth.service';
         LoaderComponent,
         UserAddComponent,
         LoginComponent,
+        EntiteAddComponent,
+        VivierAddComponent,
         // UserListComponent
 
 
@@ -82,7 +86,9 @@ import {AuthService} from '../Service/auth.service';
         }],
     entryComponents: [
         UserEditComponent,
-        UserAddComponent
+        UserAddComponent,
+        EntiteAddComponent,
+        VivierAddComponent
     ],
     bootstrap: [AppComponent]
 })

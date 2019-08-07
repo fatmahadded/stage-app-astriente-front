@@ -22,11 +22,8 @@ export class TokenInterceptor implements HttpInterceptor {
                     Authorization: 'Bearer ' + jwt
                 }
             });
-            console.log('----request----');
 
-            console.log(req);
 
-            console.log('--- end of request---');
         }
         return next.handle(req);
     }
@@ -52,11 +49,6 @@ export class TokenInterceptor implements HttpInterceptor {
                 Authorization: 'Bearer ' + jwt
             }
         });
-        console.log('----request----');
-
-        console.log(req);
-
-        console.log('--- end of request---');
         return req;
         /*console.log('----request----');
 

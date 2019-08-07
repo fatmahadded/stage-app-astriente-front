@@ -103,12 +103,10 @@ export class AccueilService {
     }
 
     private showLoader(): void {
-        console.log('show loading');
         this.loaderService.show();
     }
 
     private hideLoader(): void {
-        console.log('hide loading');
         this.loaderService.hide();
     }
 }

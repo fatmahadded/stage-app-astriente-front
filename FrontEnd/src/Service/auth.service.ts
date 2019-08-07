@@ -47,7 +47,6 @@ export class AuthService {
 
     logout() {
         this.showLoader();
-        console.log('logout service ')
         return this.http.post<any>(API_URL + '/logout', null)
             .finally(() => {
                 this.doLogoutUser();
