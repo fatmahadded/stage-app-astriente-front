@@ -7,7 +7,6 @@ import {Remplacement} from '../../Entity/remplacement.entity';
 import * as jwt_decode from 'jwt-decode';
 import {AuthService} from '../../Service/auth.service';
 import {UserService} from '../../Service/user.service';
-import {Semaine} from '../../Entity/semaine.entity';
 
 
 @Component({
@@ -21,9 +20,9 @@ export class AccueilComponent implements OnInit {
     public astreintes: Astreinte[];
 
     public idSemaine: any;
+    console = console;
     private results: Object;
     private exportJson: any;
-    console = console;
     private role;
     private usersByVivier;
     private allUsers;
@@ -97,6 +96,7 @@ export class AccueilComponent implements OnInit {
                             'user': null,
                             'paye': '',
                             'rapport': null,
+                            'repos': null,
                             'semaine': null,
                             remplacements: null
                         };
@@ -104,7 +104,7 @@ export class AccueilComponent implements OnInit {
                         this.astreintes.push(new_astreinte)
                     }
                 }
-                console.log('###############new astreintes')
+                console.log('###############new astreintes');
                 console.log(this.astreintes);
 
 
@@ -234,7 +234,7 @@ export class AccueilComponent implements OnInit {
             'semaine': '/api/semaines/' + this.idSemaine,
             'vivier': '/api/viviers/' + vivier
         };
-        console.log(addAstreinte)
+        console.log(addAstreinte);
         console.log('++++++++++++++++++++++++++++++', exist);
         if (exist === 0) {
             console.log('#######################################################');
