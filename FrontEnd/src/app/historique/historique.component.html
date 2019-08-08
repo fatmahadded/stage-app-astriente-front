@@ -76,55 +76,57 @@
                                                     type="button">
                                                 <i class="material-icons">close</i>
                                             </button>
-                                        <span>
+                                            <span>
                                                     <p class="col-md-12  ">Nombre De jour  :   {{nombreDejourTotal}} </p>
                                             </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="table-responsive">
+                            <div class="table-responsive">
 
-                            <table class="table table-striped table-bordered">
-                                <thead class=" text-primary">
-                                <th>Semaine</th>
-                                <th>Rapport d'astreinte</th>
-                                <th>Repos obtenu</th>
-                                </thead>
-                                <tbody>
+                                <table class="table table-striped table-bordered" id="my-table">
+                                    <thead class=" text-primary">
+                                    <th>Semaine</th>
+                                    <th>Rapport d'astreinte</th>
+                                    <th>Repos obtenu</th>
+                                    </thead>
+                                    <tbody>
 
-                                <tr *ngFor="let astreinte of astreintes">
-                                    <td>
-                                        S{{astreinte.semaine.num_semaine}} Du
-                                        Vendredi {{astreinte.semaine.debut_semaine| date: 'dd/MM/yyyy'}} au
-                                        Jeudi {{astreinte.semaine.fin_semaine| date: 'dd/MM/yyyy'}}
-                                    </td>
-                                    <td>
-                                        <a *ngIf="astreinte.rapport && astreinte.rapport.id ">
-                                            <i class="material-icons">check_circle_outline</i>
-                                        </a>
-                                        <a *ngIf="!astreinte.rapport"
-                                           [routerLink]="['/rapport']">
-                                            <i class="material-icons">radio_button_unchecked</i>
-                                        </a>
-                                    </td>
-                                    <td *ngIf="!astreinte.rapport"> ----</td>
-                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombre_heures}}</td>
-                                </tr>
-                                </tbody>
+                                    <tr *ngFor="let astreinte of astreintes">
+                                        <td>
+                                            S{{astreinte.semaine.num_semaine}} Du
+                                            Vendredi {{astreinte.semaine.debut_semaine| date: 'dd/MM/yyyy'}} au
+                                            Jeudi {{astreinte.semaine.fin_semaine| date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td>
+                                            <a *ngIf="astreinte.rapport && astreinte.rapport.id ">
+                                                <button (click)="downloadPDf()" style=" background-color: transparent; border-color: transparent;"
+                                                        type="button">
+                                                    <i class="material-icons">check_circle_outline</i></button>
+                                            </a>
+                                            <a *ngIf="!astreinte.rapport"
+                                               [routerLink]="['/rapport']">
+                                                <i class="material-icons">radio_button_unchecked</i>
+                                            </a>
+                                        </td>
+                                        <td *ngIf="!astreinte.rapport"> ----</td>
+                                        <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombre_heures}}</td>
+                                    </tr>
+                                    </tbody>
 
-                            </table>
+                                </table>
 
+
+                            </div>
 
                         </div>
 
                     </div>
-
                 </div>
+
             </div>
 
         </div>
-
     </div>
 </div>
-

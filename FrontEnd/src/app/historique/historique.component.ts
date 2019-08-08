@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AstreinteService} from '../astreinte.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Astreinte} from '../../Entity/astreinte.entity';
+import * as jsPDF from 'jspdf'
+import 'jspdf-autotable';
+
 
 @Component({
     selector: 'app-historique',
@@ -55,6 +58,14 @@ export class HistoriqueComponent implements OnInit {
         });
         this.reliquatTotal = this.reposTotal % 4;
         this.nombreDejourTotal = (this.reposTotal - this.reliquatTotal) / 8;
+
+    }
+
+    downloadPDf() {
+        const doc = new jsPDF();
+        doc.text('Rapport', 60, 10);
+        doc.autoTable({html: '#my-table'})
+        doc.save('Rapport.pdf');
 
     }
 }
