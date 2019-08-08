@@ -34,12 +34,31 @@ export class AuthService {
                 catchError(error => {
                     alert(error.error);
                     return of(false);
+
+                }),
+                finalize(() => {
+                    this.router.navigate(['/accueil'])
+                    this.onEnd();
+                }))
+            ;
+    }
+/*
+login(user: { mail: string, password: string }): Observable<boolean> {
+        this.showLoader();
+        return this.http.post<any>(API_URL + '/login', user)
+            .pipe(
+                tap(tokens => this.doLoginUser(user.mail, tokens)),
+                mapTo(true),
+                catchError(error => {
+                    alert(error.error);
+                    return of(false);
                 }),
                 finalize(() => {
                     this.onEnd();
                 }))
             ;
     }
+*/
 
     tryLogin(user: { mail: string, password: string }): Observable<boolean> {
         return this.http.post<any>(API_URL + '/login', user)
@@ -74,11 +93,18 @@ export class AuthService {
     }
 
     refreshToken() {
+        this.showLoader();
+        console.log('refreshing ......');
         return this.http.post<any>(API_URL + '/refresh', {
             'refresh_token': this.getRefreshToken()
-        }).pipe(tap((tokens: Tokens) => {
+        }).pipe(
+            tap((tokens: Tokens) => {
             this.storeJwtToken(tokens.token);
-        }));
+        }),
+        finalize(() => {
+                this.onEnd();
+            })
+        );
     }
 
     getVivier() {
@@ -110,6 +136,7 @@ export class AuthService {
             .subscribe(data => {
                 user = data;
                 console.log('I m the connected user :' + user.nom);
+                this.router.navigate(['/accueil'])
                 this.storeTokens(tokens, user);
             });
     }
@@ -132,7 +159,7 @@ export class AuthService {
         localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
         localStorage.setItem(this.FULL_NAME_USER, user.prenom + ' ' + user.nom);
         localStorage.setItem(this.ID_USER, user.id.toString());
-        localStorage.setItem(this.ID_VIVIER, user.vivier[user.vivier.length - 1]);
+        localStorage.setItem(this.ID_VIVIER, user.vivier['id']);
     }
 
     private removeTokens() {

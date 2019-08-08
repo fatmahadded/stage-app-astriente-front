@@ -49,8 +49,8 @@ export class HistoriqueComponent implements OnInit {
     caclulReposTotal() {
         this.astreintes.forEach((astreinte: Astreinte) => {
             if (astreinte.repos) {
-                this.reposTotal += astreinte.repos.nombre_heures;
-                this.salaireTotal += astreinte.repos.repo_salaire;
+                this.reposTotal += astreinte.repos.nombreHeures;
+                this.salaireTotal += astreinte.repos.repoSalaire;
             }
         });
         this.reliquatTotal = this.reposTotal % 4;

@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { Utilisateur} from '../../Entity/utilisateur.entity';
 import {UserService, UtilisateurForm} from '../../Service/user.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserListComponent} from '../user-list/user-list.component';
+import {Utilisateur} from '../../Entity/utilisateur.entity';
 
 @Component({
-    providers: [ UserListComponent ],
+    providers: [UserListComponent],
     selector: 'app-user-edit',
     templateUrl: './user-edit.component.html',
     styleUrls: ['./user-edit.component.scss']
@@ -15,6 +15,8 @@ export class UserEditComponent implements OnInit {
 
     user: UtilisateurForm;
     userForm: FormGroup;
+    updatedUser: EventEmitter<Utilisateur> = new EventEmitter();
+
 
     constructor(public modal: NgbActiveModal,
                 private _formBuilder: FormBuilder,
@@ -36,10 +38,11 @@ export class UserEditComponent implements OnInit {
     }
 
     editUser() {
-        let temp = null;
-        console.log(this.userForm.value);
         this.userservice.putUser(this.userForm.value)
-            .subscribe(data => {temp = data; console.log('test' + temp); });
+            .subscribe((user: Utilisateur) => {
+                this.updatedUser.emit(user);
+            });
         this.modal.dismiss('Cross click');
+
     }
 }

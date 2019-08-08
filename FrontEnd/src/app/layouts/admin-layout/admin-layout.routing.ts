@@ -1,13 +1,11 @@
 import {Routes} from '@angular/router';
 
-import {UserProfileComponent} from '../../user-profile/user-profile.component';
-import {NotificationsComponent} from '../../notifications/notifications.component';
 import {AccueilComponent} from '../../accueil/accueil.component';
 import {HistoriqueComponent} from '../../historique/historique.component';
 import {RapportComponent} from '../../rapport/rapport.component';
 import {UserListComponent} from '../../user-list/user-list.component';
-import {LoginComponent} from '../../login/login.component';
 import {AuthGuard} from '../../../Guard/auth.guard';
+import {AdminGuard} from '../../../Guard/admin.guard';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -55,10 +53,7 @@ export const AdminLayoutRoutes: Routes = [
     {path: 'rapport', component: RapportComponent, canActivate: [AuthGuard]},
     {path: 'historique', component: HistoriqueComponent, canActivate: [AuthGuard]},
     {path: 'accueil', component: AccueilComponent, canActivate: [AuthGuard]},
-    {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
-    {path: 'user-list', component: UserListComponent, canActivate: [AuthGuard]},
-    {path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
-
+    {path: 'user-list', component: UserListComponent, canActivate: [AuthGuard, AdminGuard]},
 
 
 ];

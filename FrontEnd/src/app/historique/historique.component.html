@@ -95,21 +95,21 @@
 
                                 <tr *ngFor="let astreinte of astreintes">
                                     <td>
-                                        S{{astreinte.semaine.num_semaine}} Du
-                                        Vendredi {{astreinte.semaine.debut_semaine| date: 'dd/MM/yyyy'}} au
-                                        Jeudi {{astreinte.semaine.fin_semaine| date: 'dd/MM/yyyy'}}
+                                        S{{astreinte.semaine.numSemaine}} Du
+                                        Vendredi {{astreinte.semaine.debutSemaine| date: 'dd/MM/yyyy'}} au
+                                        Jeudi {{astreinte.semaine.finSemaine| date: 'dd/MM/yyyy'}}
                                     </td>
                                     <td>
                                         <a *ngIf="astreinte.rapport && astreinte.rapport.id ">
                                             <i class="material-icons">check_circle_outline</i>
                                         </a>
                                         <a *ngIf="!astreinte.rapport"
-                                           [routerLink]="['/rapport']">
+                                           [routerLink]="['/rapport/']">
                                             <i class="material-icons">radio_button_unchecked</i>
                                         </a>
                                     </td>
                                     <td *ngIf="!astreinte.rapport"> ----</td>
-                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombre_heures}}</td>
+                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombreHeures}}</td>
                                 </tr>
                                 </tbody>
 

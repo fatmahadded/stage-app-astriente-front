@@ -12,7 +12,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
-
+// @ts-ignore
+import {RetourService} from './service/Retour.service';
 import {AgmCoreModule} from '@agm/core';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {RatingModule} from 'ng-starrating';
@@ -23,7 +24,17 @@ import {LoaderComponent} from './loader/loader.component';
 import {MaterialModule} from './material.module';
 
 
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatSelectModule, MatTooltipModule} from '@angular/material';
+import {
+    MatButtonModule,
+    MatInputModule,
+    MatRippleModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatSelectModule
+} from '@angular/material';
+import { EntiteAddComponent } from './entite-add/entite-add.component';
+import { VivierAddComponent } from './vivier-add/vivier-add.component';
+
 import {UserAddComponent} from './user-add/user-add.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from '../Guard/auth.guard';
@@ -31,11 +42,14 @@ import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from '../Service/auth.service';
 import {AstreinteService} from './astreinte.service';
 import {TestComponent} from './test/test.component';
+import { AlertComponent } from './alert/alert.component';
+
 
 @NgModule({
     imports: [
         BrowserAnimationsModule,
         FormsModule,
+        NgbModule,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
@@ -55,10 +69,12 @@ import {TestComponent} from './test/test.component';
         MatSelectModule,
         MatTooltipModule,
         MaterialModule,
+        ComponentsModule,
+        RouterModule,
+        AppRoutingModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-        }),
-        AppRoutingModule,
+        })
     ],
     declarations: [
         TestComponent,
@@ -68,11 +84,18 @@ import {TestComponent} from './test/test.component';
         LoaderComponent,
         UserAddComponent,
         LoginComponent,
+        EntiteAddComponent,
+        VivierAddComponent,
+        AlertComponent,
         // UserListComponent
+
+
     ],
     providers: [
         AstreinteService,
         GetService,
+        RetourService,
+        AstreinteService,
         UserService,
         LoaderService,
         AuthGuard,
@@ -84,7 +107,9 @@ import {TestComponent} from './test/test.component';
         }],
     entryComponents: [
         UserEditComponent,
-        UserAddComponent
+        UserAddComponent,
+        EntiteAddComponent,
+        VivierAddComponent
     ],
     bootstrap: [AppComponent]
 })

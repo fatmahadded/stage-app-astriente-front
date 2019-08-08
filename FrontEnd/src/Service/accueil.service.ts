@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 import {Semaine} from '../Entity/semaine.entity';
 import {Astreinte} from '../Entity/astreinte.entity';
 import * as FileSaver from 'file-saver';
@@ -35,8 +34,8 @@ export class AccueilService {
             });
     }
 
-    updateAstreinte(number , id) {
-        const json = { 'user': {'id': number} }
+    updateAstreinte(number, id) {
+        const json = {'user': {'id': number}};
         this.showLoader();
         return this.http.put(API_URL + '/api/astreintes/' + id, json)
             .finally(() => {
@@ -60,6 +59,14 @@ export class AccueilService {
             });
     }
 
+    getAllAstreintes(idSemaine): Observable<Astreinte[]> {
+        this.showLoader();
+        return this.http.get<Astreinte[]>(API_URL + '/accueil/all/astreinte/' + idSemaine)
+            .finally(() => {
+                this.onEnd();
+            });
+    }
+
     getURL(url) {
         this.showLoader();
         return this.http.get(API_URL + url)
@@ -68,9 +75,9 @@ export class AccueilService {
             });
     }
 
-    export(url) {
+    export(url): Observable<[]> {
         this.showLoader();
-        return this.http.get(API_URL + url)
+        return this.http.get<[]>(API_URL + url)
             .finally(() => {
                 this.onEnd();
             });
@@ -85,17 +92,17 @@ export class AccueilService {
         }
     }
 
-    private saveAsExcelFile(buffer: any, fileName: string): void {
-        const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
-        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-    }
-
     addAstreinte(json) {
         this.showLoader();
         return this.http.post(API_URL + '/api/astreintes', json)
             .finally(() => {
                 this.onEnd();
             });
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
     private onEnd(): void {

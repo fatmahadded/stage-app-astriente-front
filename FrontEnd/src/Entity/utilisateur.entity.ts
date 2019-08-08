@@ -5,6 +5,6 @@ export interface Utilisateur {
     prenom: string,
     mail: string,
     password: string,
-    roles: string,
+    roles: string
     vivier: string
 }

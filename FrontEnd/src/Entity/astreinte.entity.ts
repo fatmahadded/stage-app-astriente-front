@@ -14,6 +14,6 @@ export interface Astreinte {
 
 
 export interface Repos {
-    nombre_heures: number;
-    repo_salaire: number;
+    nombreHeures: number;
+    repoSalaire: number;
 }
