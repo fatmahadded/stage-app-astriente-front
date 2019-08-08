@@ -33,12 +33,31 @@ export class AuthService {
                 catchError(error => {
                     alert(error.error);
                     return of(false);
+
+                }),
+                finalize(() => {
+                    this.router.navigate(['/accueil'])
+                    this.onEnd();
+                }))
+            ;
+    }
+/*
+login(user: { mail: string, password: string }): Observable<boolean> {
+        this.showLoader();
+        return this.http.post<any>(API_URL + '/login', user)
+            .pipe(
+                tap(tokens => this.doLoginUser(user.mail, tokens)),
+                mapTo(true),
+                catchError(error => {
+                    alert(error.error);
+                    return of(false);
                 }),
                 finalize(() => {
                     this.onEnd();
                 }))
             ;
     }
+*/
 
     tryLogin(user: { mail: string, password: string }): Observable<boolean> {
         return this.http.post<any>(API_URL + '/login', user)
@@ -110,6 +129,7 @@ export class AuthService {
             .subscribe(data => {
                 user = data;
                 console.log('I m the connected user :' + user.nom);
+                this.router.navigate(['/accueil'])
                 this.storeTokens(tokens, user);
             });
     }

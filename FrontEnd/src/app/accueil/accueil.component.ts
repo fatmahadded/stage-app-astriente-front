@@ -7,7 +7,6 @@ import {Remplacement} from '../../Entity/remplacement.entity';
 import * as jwt_decode from 'jwt-decode';
 import {AuthService} from '../../Service/auth.service';
 import {UserService} from '../../Service/user.service';
-import {Semaine} from '../../Entity/semaine.entity';
 
 
 @Component({
@@ -21,9 +20,9 @@ export class AccueilComponent implements OnInit {
     public astreintes: Astreinte[];
 
     public idSemaine: any;
+    console = console;
     private results: Object;
     private exportJson: any;
-    console = console;
     private role;
     private usersByVivier;
     private allUsers;
@@ -104,7 +103,7 @@ export class AccueilComponent implements OnInit {
                         this.astreintes.push(new_astreinte)
                     }
                 }
-                console.log('###############new astreintes')
+                console.log('###############new astreintes');
                 console.log(this.astreintes);
 
 
@@ -124,36 +123,7 @@ export class AccueilComponent implements OnInit {
     }
 
     saveTable(form: NgForm) {
-        for (let i = 0; i < 14; i++) {
-            const r = 'remplacement' + i;
-            if (form.value[r] === true) {
-                console.log('remplacement à faire' + i);
-                let seance: string;
-                if (i % 2 !== 0) {
-                    seance = 'Afternoon'
-                } else {
-                    seance = 'Morning'
-                }
-                const add = i / 2;
-                const dateR = new Date();
-                const current = new Date(this.astreintes[0].semaine.debutSemaine);
-                dateR.setDate(current.getDate() + add);
-                console.log(dateR);
-                const json = {
-                    'user': '/api/utilisateurs/' + this.authService.getIdUser(),
-                    'astreinte': 'api/astreintes/' + this.astreintes[0].id,
-                    'seance': seance,
-                    'date': dateR,
-                    'num': i
-                };
-                console.log(json);
-                this.accueilService.addRemplacement(json).subscribe((val) => {
-                    console.log('POST call add remplacement success', val);
-                    this.accueilService.getAstreintes(this.idSemaine, this.authService.getVivier())
-                        .subscribe(data => this.astreintes = data);
-                });
-            }
-        }
+        this.addRemplacements(form);
         if (form.value.inscrire === true) {
             const addAstreinte = {
                 'user': '/api/utilisateurs/' + this.authService.getIdUser(),
@@ -218,12 +188,43 @@ export class AccueilComponent implements OnInit {
                     this.formatJsonToXls(this.exportJson)
                 });
         }
+        this.addRemplacements(form)
     }
 
     saveTableAdminNatXLS(form: NgForm) {
         if (form.value.export === true) {
             this.exportJson = this.astreintes;
             this.formatJsonToXls(this.astreintes);
+        }
+    }
+
+    saveRemplacemets(form: NgForm, i) {
+        const r = 'remplacement' + i;
+        if (form.value[r] === true) {
+            console.log('remplacement à faire' + i);
+            let seance: string;
+            if (i % 2 !== 0) {
+                seance = 'Afternoon'
+            } else {
+                seance = 'Morning'
+            }
+            const add = i / 2;
+            const dateR = new Date();
+            const current = new Date(this.astreintes[0].semaine.debutSemaine);
+            dateR.setDate(current.getDate() + add);
+            console.log(dateR);
+            const json = {
+                'user': '/api/utilisateurs/' + this.authService.getIdUser(),
+                'astreinte': 'api/astreintes/' + this.astreintes[0].id,
+                'seance': seance,
+                'date': dateR,
+                'num': i
+            };
+            console.log(json);
+            this.accueilService.addRemplacement(json).subscribe((val) => {
+                console.log('POST call add remplacement success', val);
+                this.getAstreintes();
+            });
         }
     }
 
@@ -234,7 +235,7 @@ export class AccueilComponent implements OnInit {
             'semaine': '/api/semaines/' + this.idSemaine,
             'vivier': '/api/viviers/' + vivier
         };
-        console.log(addAstreinte)
+        console.log(addAstreinte);
         console.log('++++++++++++++++++++++++++++++', exist);
         if (exist === 0) {
             console.log('#######################################################');
@@ -244,16 +245,50 @@ export class AccueilComponent implements OnInit {
                 this.accueilService.getURL('/accueil/send/confirmation')
                     .subscribe();
             });
-        }
-        this.accueilService.updateAstreinte(form.value.userInscrit, this.astreintes[0].id)
-            .subscribe(() => {
-                    this.getAstreintes();
+        } else if (form.value.userInscrit) {
+            this.accueilService.updateAstreinte(form.value.userInscrit, exist)
+                .subscribe(() => {
+                        this.getAstreintes();
 
-                    this.accueilService.getURL('/accueil/send/confirmation')
-                        .subscribe();
+                        this.accueilService.getURL('/accueil/send/confirmation')
+                            .subscribe();
+                    }
+                )
+            ;
+        }
+    }
+
+    addRemplacements(form: NgForm) {
+        console.log('recherche des remplacements');
+        for (let i = 0; i < 14; i++) {
+            const r = 'remplacement' + i;
+            if (form.value[r] === true) {
+                console.log('remplacement à faire' + i);
+                let seance: string;
+                if (i % 2 !== 0) {
+                    seance = 'Afternoon'
+                } else {
+                    seance = 'Morning'
                 }
-            )
-        ;
+                const add = i / 2;
+                const dateR = new Date();
+                const current = new Date(this.astreintes[0].semaine.debutSemaine);
+                dateR.setDate(current.getDate() + add);
+                console.log(dateR);
+                const json = {
+                    'user': '/api/utilisateurs/' + this.authService.getIdUser(),
+                    'astreinte': 'api/astreintes/' + this.astreintes[0].id,
+                    'seance': seance,
+                    'date': dateR,
+                    'num': i
+                };
+                console.log(json);
+                this.accueilService.addRemplacement(json).subscribe((val) => {
+                    console.log('POST call add remplacement success', val);
+                    this.getAstreintes();
+                });
+            }
+        }
     }
 
 

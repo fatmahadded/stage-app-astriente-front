@@ -39,6 +39,7 @@ import {UserAddComponent} from './user-add/user-add.component';
 import { LoginComponent } from './login/login.component';
 import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from '../Service/auth.service';
+import { AlertComponent } from './alert/alert.component';
 
 
 @NgModule({
@@ -59,7 +60,6 @@ import {AuthService} from '../Service/auth.service';
         MaterialModule,
         ComponentsModule,
         RouterModule,
-        NgbModule,
         AppRoutingModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -74,6 +74,7 @@ import {AuthService} from '../Service/auth.service';
         LoginComponent,
         EntiteAddComponent,
         VivierAddComponent,
+        AlertComponent,
         // UserListComponent
 
 
