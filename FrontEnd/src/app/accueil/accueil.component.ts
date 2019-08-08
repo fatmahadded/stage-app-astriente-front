@@ -96,6 +96,7 @@ export class AccueilComponent implements OnInit {
                             'user': null,
                             'paye': '',
                             'rapport': null,
+                            'repos': null,
                             'semaine': null,
                             remplacements: null
                         };
@@ -145,7 +146,11 @@ export class AccueilComponent implements OnInit {
             this.accueilService.export(url)
                 .subscribe(data => {
                     this.exportJson = data;
-                    this.formatJsonToXls(this.exportJson)
+                    if (data.length === 0) {
+                        alert('pas d\'astreintes dans cette période');
+                    } else {
+                        this.formatJsonToXls(this.exportJson)
+                    }
                 });
         }
     }
@@ -185,7 +190,11 @@ export class AccueilComponent implements OnInit {
             this.accueilService.export(url)
                 .subscribe(data => {
                     this.exportJson = data;
-                    this.formatJsonToXls(this.exportJson)
+                    if (data.length === 0) {
+                        alert('pas d\'astreintes dans cette période');
+                    } else {
+                        this.formatJsonToXls(this.exportJson)
+                    }
                 });
         }
         this.addRemplacements(form)
@@ -194,7 +203,11 @@ export class AccueilComponent implements OnInit {
     saveTableAdminNatXLS(form: NgForm) {
         if (form.value.export === true) {
             this.exportJson = this.astreintes;
-            this.formatJsonToXls(this.astreintes);
+            if (this.astreintes === null) {
+                alert('pas d\'astreintes dans cette période');
+            } else {
+                this.formatJsonToXls(this.astreintes);
+            }
         }
     }
 
@@ -297,7 +310,11 @@ export class AccueilComponent implements OnInit {
         this.accueilService.export(url)
             .subscribe(data => {
                 this.exportJson = data;
-                this.formatJsonToXls(this.exportJson)
+                if (data.length === 0) {
+                    alert('pas d\'astreintes dans cette période');
+                } else {
+                    this.formatJsonToXls(this.exportJson)
+                }
             });
 
     }

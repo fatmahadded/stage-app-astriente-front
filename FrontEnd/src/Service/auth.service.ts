@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {of, Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {catchError, finalize, mapTo, tap} from 'rxjs/operators';
 import {Tokens} from '../Entity/tokens';
 import {Utilisateur} from '../Entity/utilisateur.entity';
 import {Router} from '@angular/router';
 import {LoaderService} from './loader.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 const API_URL = 'http://localhost:8000';
 
@@ -66,7 +67,7 @@ login(user: { mail: string, password: string }): Observable<boolean> {
 
     logout() {
         this.showLoader();
-        console.log('logout service ')
+        console.log('logout service ');
         return this.http.post<any>(API_URL + '/logout', null)
             .finally(() => {
                 this.doLogoutUser();
@@ -120,6 +121,12 @@ login(user: { mail: string, password: string }): Observable<boolean> {
 
     getJwtToken() {
         return localStorage.getItem(this.JWT_TOKEN);
+    }
+
+    getCredentails() {
+        const helper = new JwtHelperService();
+
+        return helper.decodeToken(this.getJwtToken());
     }
 
     private doLoginUser(mail: string, tokens: Tokens) {

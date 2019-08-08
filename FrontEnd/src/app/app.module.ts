@@ -5,19 +5,21 @@ import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {JwtModule} from '@auth0/angular-jwt';
 import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
+import {GetService} from './services/get.service';
+import {BrowserModule} from '@angular/platform-browser';
+import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
 // @ts-ignore
 import {RetourService} from './service/Retour.service';
-//import {AstreinteService} from './astreinte.service';
 import {AgmCoreModule} from '@agm/core';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {RatingModule} from 'ng-starrating';
 import {UserService} from '../Service/user.service';
 import {UserEditComponent} from './user-edit/user-edit.component';
+import {LoaderService} from '../Service/loader.service';
 import {LoaderComponent} from './loader/loader.component';
 import {MaterialModule} from './material.module';
 
@@ -30,15 +32,16 @@ import {
     MatTooltipModule,
     MatSelectModule
 } from '@angular/material';
-import {AuthGuard} from '../Guard/auth.guard';
 import { EntiteAddComponent } from './entite-add/entite-add.component';
 import { VivierAddComponent } from './vivier-add/vivier-add.component';
-import {LoaderService} from '../Service/loader.service';
 
 import {UserAddComponent} from './user-add/user-add.component';
-import { LoginComponent } from './login/login.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuard} from '../Guard/auth.guard';
 import {TokenInterceptor} from './token.interceptor';
 import {AuthService} from '../Service/auth.service';
+import {AstreinteService} from './astreinte.service';
+import {TestComponent} from './test/test.component';
 import { AlertComponent } from './alert/alert.component';
 
 
@@ -48,9 +51,17 @@ import { AlertComponent } from './alert/alert.component';
         FormsModule,
         NgbModule,
         ReactiveFormsModule,
+        BrowserModule,
         HttpClientModule,
         HttpModule,
         RatingModule,
+        ComponentsModule,
+        RouterModule,
+        JwtModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+        }),
+        NgbModule,
         MatButtonModule,
         MatRippleModule,
         MatFormFieldModule,
@@ -66,6 +77,7 @@ import { AlertComponent } from './alert/alert.component';
         })
     ],
     declarations: [
+        TestComponent,
         AppComponent,
         AdminLayoutComponent,
         UserEditComponent,
@@ -79,8 +91,11 @@ import { AlertComponent } from './alert/alert.component';
 
 
     ],
-    providers: [RetourService,
-        //AstreinteService,
+    providers: [
+        AstreinteService,
+        GetService,
+        RetourService,
+        AstreinteService,
         UserService,
         LoaderService,
         AuthGuard,
