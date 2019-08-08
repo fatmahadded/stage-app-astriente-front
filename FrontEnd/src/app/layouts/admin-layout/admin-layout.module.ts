@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import { MaterialModule } from '../../material.module';
 
 
@@ -22,6 +21,7 @@ import {RatingModule} from 'ng-starrating';
 import {UserListComponent} from '../../user-list/user-list.component';
 import {TokenInterceptor} from '../../token.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { NgbRatingModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     providers: [
         {
@@ -43,6 +43,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
         MatTooltipModule,
         RatingModule,
         MaterialModule,
+        NgbRatingModule
     ],
     exports: [
     ],
@@ -50,7 +51,6 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
         RapportComponent,
         HistoriqueComponent,
         AccueilComponent,
-        NotificationsComponent,
         UserListComponent
 
 

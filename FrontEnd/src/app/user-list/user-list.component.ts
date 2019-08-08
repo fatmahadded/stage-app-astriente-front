@@ -7,6 +7,8 @@ import {UserAddComponent} from '../user-add/user-add.component';
 import {EntiteAddComponent} from '../entite-add/entite-add.component';
 import {VivierAddComponent} from '../vivier-add/vivier-add.component';
 import {Utilisateur} from '../../Entity/utilisateur.entity';
+import {AuthService} from '../../Service/auth.service';
+
 
 @Component({
     selector: 'app-user-list',
@@ -20,14 +22,18 @@ export class UserListComponent implements OnInit {
     private roles = USER_ROLES;
 
     constructor(private _userService: UserService,
-                private _modalService: NgbModal) {
+                private _modalService: NgbModal,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
+
         this.fetchUsersByRole();
+
     }
 
     resetForm(form?: NgForm) {
+
         if (form != null) {
             form.resetForm();
         }
@@ -68,26 +74,35 @@ export class UserListComponent implements OnInit {
 
     addUser() {
         const modalRef = this._modalService.open(UserAddComponent);
+
     }
 
     addEntite() {
+
         const modalRef = this._modalService.open(EntiteAddComponent);
+
     }
 
     addVivier() {
+
         const modalRef = this._modalService.open(VivierAddComponent);
+
     }
 
     onUserRoleChange(event: any) {
+
         this.selectedRole = event.target.value;
         this.fetchUsersByRole();
+
     }
 
     private fetchUsersByRole() {
+
         this._userService.getUsersByRole(this.selectedRole)
             .subscribe((data: Utilisateur[]) => {
                 this.users = data;
             })
+
     }
 
 }
