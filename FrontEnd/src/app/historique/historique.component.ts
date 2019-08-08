@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AstreinteService} from '../astreinte.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Astreinte} from '../../Entity/astreinte.entity';
-import * as jsPDF from 'jspdf'
-import 'jspdf-autotable';
 
 
 @Component({
@@ -48,22 +46,15 @@ export class HistoriqueComponent implements OnInit {
     caclulReposTotal() {
         this.astreintes.forEach((astreinte: Astreinte) => {
             if (astreinte.repos) {
-                this.reposTotal += astreinte.repos.nombre_heures;
-                this.salaireTotal += astreinte.repos.repo_salaire;
+                this.reposTotal += astreinte.repos.nombreHeures;
+                this.salaireTotal += astreinte.repos.repoSalaire;
             }
         });
         this.reliquatTotal = this.reposTotal % 4;
         this.nombreDejourTotal = (this.reposTotal - this.reliquatTotal) / 8;
 
     }
-
-    downloadPDf() {
-        const doc = new jsPDF();
-        doc.text('Rapport', 60, 10);
-        doc.autoTable({html: '#my-table'})
-        doc.save('Rapport.pdf');
-
-    }
+    
 }
 
 // export class HistoriqueComponent implements OnInit {

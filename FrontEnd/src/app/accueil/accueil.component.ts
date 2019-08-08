@@ -98,7 +98,7 @@ export class AccueilComponent implements OnInit {
                             'rapport': null,
                             'repos': null,
                             'semaine': null,
-                            remplacements: null, repos: null
+                            remplacements: null
                         };
 
                         this.astreintes.push(new_astreinte)
