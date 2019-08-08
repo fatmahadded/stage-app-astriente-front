@@ -96,6 +96,7 @@ export class AccueilComponent implements OnInit {
                             'user': null,
                             'paye': '',
                             'rapport': null,
+                            'repos': null,
                             'semaine': null,
                             remplacements: null, repos: null
                         };
