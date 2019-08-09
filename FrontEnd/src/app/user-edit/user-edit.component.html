@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="userForm" (ngSubmit)="editUser()">
+    <div class="form-group">
+      <label>Nom</label>
+      <input name="FullName"
+             class="form-control" formControlName="nom">
+      <div class="validation-error" *ngIf="userForm.controls.nom.invalid">This field is
+        required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Prenom</label>
+      <input name="Position"
+      formControlName="prenom"
+             class="form-control">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Mail</label>
+        <input name="EMPCode"
+               formControlName="mail"
+               class="form-control">
+      </div>
+      <input type="hidden" name="UserID"   formControlName="id" >
+
+    </div>
+    <div class="form-group">
+      <button type="submit"
+              [disabled]="userForm.invalid"
+              class="btn btn-lg btn-block">SUBMIT
+      </button>
+    </div>
+  </form>
+
+
+</div>
+<!--<div class="modal-footer">-->
+<!--  <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>-->
+<!--</div>-->
