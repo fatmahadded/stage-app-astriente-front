@@ -1,0 +1,433 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Export XLS de la liste</h4>
+                        <p class="card-category"> ..</p>
+                    </div>
+                    <div class="card-body">
+                        <form #f3="ngForm" (ngSubmit)="export(f3)">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>De </label>
+                                    <input class="form-control" name="dateDebut" ngModel type="date">
+                                </div>
+                                <div class="col-md-6">
+                                    <label> à </label>
+                                    <input class="form-control" name="dateFin" ngModel type="date">
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-danger" type="submit">Exporter</button>
+
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">
+                            <img class="img" src="./assets/img/user.png"/>
+                        </a>
+                    </div>
+                    <div class="card-body">
+
+                        <h4 class="card-title">{{this.authService.getFullNameUser()}}</h4>
+                        <h6 class="card-category text-gray">Vivier_ID : {{this.authService.getVivier()}}</h6>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Astreite par semaine</h4>
+                        <p class="card-category"></p>
+                    </div>
+                    <div class="card-body">
+                        <form #f="ngForm" (ngSubmit)="refreshTable(f)">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="bmd-label-floating" for="listSem">Veuillez choisir la semaine à
+                                        afficher</label>
+                                    <select class="form-control" id="listSem" name="semaineChoisi" ngModel>
+                                        <option *ngFor="let semaine of semaines" [ngValue]="semaine.id">
+                                            S{{semaine.numSemaine}} Du
+                                            Vendredi {{semaine.debutSemaine| date: 'dd/MM/yyyy'}} au
+                                            Jeudi {{semaine.finSemaine| date: 'dd/MM/yyyy'}}</option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary" type="submit">Actualiser</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div *ngIf="role === 'ROLE_USER'">
+
+                            <form #f2="ngForm" (ngSubmit)="saveTable(f2)" *ngIf="idSemaine!=null">
+
+                                <br>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div *ngIf="idSemaine!=null"
+                                             class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="ins" name="inscrire" ngModel
+                                                   type="checkbox">
+                                            <label class="custom-control-label" for="ins">M'inscrire pour toute la
+                                                semaine</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div *ngIf="astreintes" class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="xls" name="export" ngModel
+                                                   type="checkbox">
+                                            <label class="custom-control-label" for="xls">Export XLS de la
+                                                semaine</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="table-responsive row">
+                                    <table *ngIf="astreintes!=null" class="table table-striped table-bordered">
+
+                                        <thead class=" text-primary">
+                                        <th class="text-center" rowspan="2">Vivier</th>
+                                        <th class="text-center" colspan="2">
+                                            Vendredi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Samedi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Dimanche
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Lundi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Mardi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Mercredi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Jeudi
+                                        </th>
+
+
+                                        </thead>
+                                        <thead class=" text-danger">
+                                        <th></th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+
+                                        </thead>
+                                        <tbody *ngIf="astreintes!=null">
+                                        <tr *ngFor="let astreinte of astreintes">
+                                            <td>{{astreinte.vivier.label}}</td>
+                                            <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
+                                                <div *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock"
+                                                     class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" id="remplacement{{number}}"
+                                                           name="remplacement{{number}}" ngModel
+                                                           type="checkbox">
+                                                    <label class="custom-control-label" for="remplacement{{number}}">Remplacer</label>
+                                                    {{astreinte.user.nom + ' ' + astreinte.user.prenom }}
+                                                </div>
+                                                <ng-template
+                                                    #elseBlock>{{getRemplacementUser(astreinte.remplacements, number)}}</ng-template>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-danger" type="submit">Sauvegarder</button>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="role === 'ROLE_ADMIN'">
+
+                            <form #f4="ngForm" (ngSubmit)="saveTableAdmin(f4)" *ngIf="idSemaine!=null">
+
+                                <br>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div *ngIf="idSemaine!=null ">
+                                            <label class="bmd-label-floating" for="insc">Inscrire une personne pour
+                                                toute cette semaine</label>
+                                            <select class="form-control" id="insc" name="userInscrit" ngModel>
+                                                <option *ngFor="let user of usersByVivier" [ngValue]="user.id">
+                                                    {{user.prenom + ' ' + user.nom}}</option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div *ngIf="astreintes" class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="xls1" name="export" ngModel
+                                                   type="checkbox">
+                                            <label class="custom-control-label" for="xls1">Export XLS de la
+                                                semaine</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="table-responsive row">
+                                    <table *ngIf="astreintes!=null" class="table table-striped table-bordered">
+
+                                        <thead class=" text-primary">
+                                        <th class="text-center" rowspan="2">Vivier</th>
+                                        <th class="text-center" colspan="2">
+                                            Vendredi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Samedi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Dimanche
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Lundi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Mardi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Mercredi
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Jeudi
+                                        </th>
+
+
+                                        </thead>
+                                        <thead class=" text-danger">
+                                        <th></th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+                                        <th class="text-center">Matin</th>
+                                        <th class="text-center">Après-midi</th>
+
+                                        </thead>
+                                        <tbody *ngIf="astreintes!=null">
+                                        <tr *ngFor="let astreinte of astreintes">
+                                            <td>{{astreinte.vivier.label}}</td>
+                                            <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
+                                                <div *ngIf="!existRemplacement(astreinte.remplacements,number); else elseBlock"
+                                                     class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" id="remplacement{{number}}"
+                                                           name="remplacement{{number}}" ngModel
+                                                           type="checkbox">
+                                                    <label class="custom-control-label" for="remplacement{{number}}">Remplacer</label>
+                                                    {{astreinte.user.nom + ' ' + astreinte.user.prenom }}
+                                                </div>
+                                                <ng-template
+                                                    #elseBlock>{{getRemplacementUser(astreinte.remplacements, number)}}</ng-template>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-danger" type="submit">Sauvegarder</button>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="role === 'ROLE_ADMIN_NAT'">
+
+
+                            <br>
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+
+                                </div>
+                                <form #f5="ngForm" (ngSubmit)="saveTableAdminNatXLS(f5)" *ngIf="idSemaine!=null">
+
+                                    <div class="col-md-6">
+                                        <div *ngIf="astreintes" class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="xls1" name="export" ngModel
+                                                   type="checkbox">
+                                            <label class="custom-control-label" for="xls1">Export XLS de la
+                                                semaine</label>
+                                        </div>
+
+                                    </div>
+                                    <button class="btn btn-danger" type="submit">Sauvegarder</button>
+
+                                </form>
+                            </div>
+                            <div class="table-responsive row">
+                                <table *ngIf="astreintes!=null" class="table table-striped table-bordered">
+
+                                    <thead class=" text-primary">
+                                    <th class="text-center" rowspan="2">Vivier</th>
+                                    <th class="text-center" rowspan="2">Modifier</th>
+                                    <th class="text-center" colspan="2">
+                                        Vendredi
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Samedi
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Dimanche
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Lundi
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Mardi
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Mercredi
+                                    </th>
+                                    <th class="text-center" colspan="2">
+                                        Jeudi
+                                    </th>
+
+
+                                    </thead>
+                                    <thead class=" text-danger">
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+                                    <th class="text-center">Matin</th>
+                                    <th class="text-center">Après-midi</th>
+
+                                    </thead>
+                                    <tbody *ngIf="astreintes!=null">
+                                    <tr *ngFor="let astreinte of astreintes">
+
+
+                                        <td>{{astreinte.vivier.label}}</td>
+                                        <td>
+                                            <form #f6="ngForm"
+                                                  (ngSubmit)="saveTableAdminNat(f6,astreinte.vivier.id,astreinte.id)">
+                                                <label class="bmd-label-floating" for="insc2">
+                                                    Inscrire .. :</label>
+                                                <select class="form-control" id="insc2" name="userInscrit" ngModel>
+                                                    <option *ngFor="let user of this.getUsersBy(astreinte.vivier.id)"
+                                                            [ngValue]="user.id">
+                                                        {{user.prenom + ' ' + user.nom}}</option>
+
+                                                </select>
+                                                <button class="btn btn-xs" type="submit">Sauvegarder</button>
+                                            </form>
+
+                                        </td>
+                                        <td *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10,11,12,13]">
+
+                                            <div *ngIf="this.authService.getVivier() == astreinte.vivier.id  ; else elseBlock1">
+
+                                                <div *ngIf="(astreinte.user !== null) &&(!existRemplacement(astreinte.remplacements,number)) ; else elseBlock"
+                                                     class="custom-control custom-checkbox">
+                                                    <form #f7="ngForm"
+                                                          (ngSubmit)="saveRemplacemets(f7,number)">
+                                                    <input class="custom-control-input"
+                                                           id="remplacement{{number}}"
+                                                           name="remplacement{{number}}"
+                                                           ngModel
+                                                           type="checkbox">
+                                                    <label class="custom-control-label"
+                                                           for="remplacement{{number}}">Remplacer</label>
+                                                    {{astreinte.user.nom + ' ' + astreinte.user.prenom }}
+                                                        <button class="btn btn-xs btn-success" type="submit">Ajouter</button>
+                                                    </form>
+                                                </div>
+                                                <ng-template
+                                                    #elseBlock>{{getRemplacementUser(astreinte.remplacements, number)}}</ng-template>
+
+                                            </div>
+
+                                            <ng-template
+                                                #elseBlock1>
+                                                <ng-container *ngIf="astreinte.user!=null">
+                                                    {{astreinte.user.nom + ' ' + astreinte.user.prenom }}
+
+                                                </ng-container>
+
+                                            </ng-template>
+
+                                        </td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
