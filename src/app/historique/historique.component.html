@@ -1,0 +1,133 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Vos astreintes déjà effectuées</h4>
+                        <p class="card-category"> veuillez choisir l'année:</p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <form (ngSubmit)="onSearch()"
+                                  [formGroup]="searchForm"
+                                  class="col-12">
+                                <div class="col-md-8">
+                                    <select class="form-control"
+                                            formControlName="year"
+                                            id="sel1"
+                                            name="sellist1">
+                                        <option>2019</option>
+                                        <option>2018</option>
+                                        <option>2017</option>
+                                        <option>2016</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary"
+                                            type="submit"
+
+                                    >Actualiser
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12  line">
+
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">ReposTotal :   {{reposTotal}} </p>
+                                            </span>
+                                        </div>
+
+
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">Reliquat :   {{reliquatTotal}} </p>
+                                            </span>
+                                        </div>
+
+                                        <div class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">Salaire :   {{salaireTotal}} </p>
+                                            </span>
+                                        </div>
+
+                                        <div *ngIf="astreintes.length > 0" class="alert alert-success">
+                                            <button aria-label="Close" class="close" data-dismiss="alert" mat-button
+                                                    type="button">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <span>
+                                                    <p class="col-md-12  ">Nombre De jour  :   {{nombreDejourTotal}} </p>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+
+                                <table class="table table-striped table-bordered" id="my-table">
+                                    <thead class=" text-primary">
+                                    <th>Semaine</th>
+                                    <th>Rapport d'astreinte</th>
+                                    <th>Repos obtenu</th>
+                                    </thead>
+                                    <tbody>
+
+                                <tr *ngFor="let astreinte of astreintes">
+                                    <td>
+                                        S{{astreinte.semaine.numSemaine}} Du
+                                        Vendredi {{astreinte.semaine.debutSemaine| date: 'dd/MM/yyyy'}} au
+                                        Jeudi {{astreinte.semaine.finSemaine| date: 'dd/MM/yyyy'}}
+                                    </td>
+                                    <td>
+                                        <a *ngIf="astreinte.rapport && astreinte.rapport.id ">
+                                            <i class="material-icons">check_circle_outline</i>
+                                        </a>
+                                        <a *ngIf="!astreinte.rapport"
+                                           [routerLink]="['/rapport/'+astreinte.id]">
+                                            <i class="material-icons">radio_button_unchecked</i>
+                                        </a>
+                                    </td>
+                                    <td *ngIf="!astreinte.rapport"> ----</td>
+                                    <td *ngIf="astreinte.rapport && astreinte.rapport.id ">{{astreinte.repos.nombreHeures}}</td>
+                                </tr>
+                                </tbody>
+
+                                </table>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
